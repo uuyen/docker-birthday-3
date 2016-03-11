@@ -1,5 +1,5 @@
 <a id="top"></a>
-<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/tutorial-images/logo.png" alt="docker logo">
+<img src="https://raw.githubusercontent.com/docker/docker-birthday-3/master/tutorial-images/logo.png" alt="docker logo">
 
 *Learn to build and deploy your distributed applications easily to the cloud with Docker*
 
@@ -197,7 +197,7 @@ You can now open [http://192.168.99.100:32772](http://192.168.99.100:32772) to s
 ```
 $ docker run --name static-site -e AUTHOR=Your_Name -d -p 8888:80 seqvence/static-site
 ```
-<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/tutorial-images/static.png" title="static">
+<img src="https://raw.githubusercontent.com/docker/docker-birthday-3/master/tutorial-images/static.png" title="static">
 
 I'm sure you agree that was super simple. To deploy this on a real server you would just need to install docker, and run the above docker command.
 
@@ -485,7 +485,7 @@ $ docker run -p 8888:5000 YOUR_USERNAME/myfirstapp
 
 Head over to the URL above and your app should be live.
 
-<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/tutorial-images/catgif.png" title="static">
+<img src="https://raw.githubusercontent.com/docker/docker-birthday-3/master/tutorial-images/catgif.png" title="static">
 
 Congratulations! You have successfully created your first docker image.
 
@@ -726,7 +726,7 @@ Open a browser and access [http://192.168.64.2:5001/birthday.html](http://192.16
 The page displayed will look like the one below:
 
 
-<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/tutorial-images/submit_work.png" title="static">
+<img src="https://raw.githubusercontent.com/docker/docker-birthday-3/master/tutorial-images/submit_work.png" title="static">
 
 Button message is more than intuitive so go ahead and press it. 
 
