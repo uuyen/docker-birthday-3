@@ -39,7 +39,6 @@ This document contains a series of several sections, each of which explains a pa
     -   [2.2 Docker Images](#docker-images)
     -   [2.3 Our First Image](#our-image)
     -   [2.4 Dockerfile](#dockerfiles)
-    -   [2.5 Push image to Docker Hub](#pushimage)
 -	 [3.0 Enter competition](#dockercompetition)
 	- [3.1 Pull voting-app images](#pullimage)
 	- [3.2 Instruction for building your voting app](#buildvotingapp)
@@ -470,34 +469,6 @@ OK now that you are done with the this container, stop and remove it since you w
 $ docker stop YOUR_USERNAME/myfirstapp
 $ docker rm YOUR_USERNAME/myfirstapp
 ```
-
-<a id="pushimage"></a>
-### 2.5 Push image to [Docker hub](https://hub.docker.com)
-
-Now that you have created your first Docker images is time to push it to [Docker hub](https://hub.docker.com). Assuming you have already created an account by now you need to login first using ```docker login```*:
-
-```
-$ docker login --username=YOUR_USERNAME --email=YOUR_EMAIL_ADDRESS
-Password:
-WARNING: login credentials saved in C:\Users\your_username\.docker\config.json
-Login Succeeded
-```
-
-Pushing the image is achieved by running the following command*:
-
-```
-$ docker push YOUR_USERNAME/myfirstapp
-The push refers to a repository [docker.io/YOUR_USERNAME/myfirstapp]
-82ee1a5ef6e9: Pushed
-ecc18069267f: Pushed
-e0e4898a45e7: Pushed
-9698a0f385a6: Pushed
-acb71626a146: Pushed
-3f1ec2e56b6b: Pushed
-18efc99a87df: Pushed
-```
-
-\*Replace *YOUR_USERNAME* and *YOUR\_EMAIL\_ADDRESS* with your [Docker hub](https://hub.docker.com) username and your email address used during registration.
 
 <a id="dockercompetition"></a>
 ## 3 Docker birthday competition
