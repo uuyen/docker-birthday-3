@@ -1,17 +1,14 @@
 <a id="top"></a>
-<img src="https://raw.githubusercontent.com/docker/docker-birthday-3/master/tutorial-images/logo.png" alt="docker logo">
+<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/logo.png" alt="docker logo">
 
-*Learn to build and deploy your distributed applications easily to the cloud with Docker*
+Special thanks and shout out to [Prakhar Srivastav](http://prakhar.me) for his contribution to this tutorial.
 
 <a href="#top" class="top" id="getting-started">Top</a>
 ## Getting Started: FAQs
 
-### What is Docker?
-Wikipedia defines [Docker](https://www.docker.com/) as
+### What is Docker Engine?
 
-> an open-source project that automates the deployment of software applications inside **containers** by providing an additional layer of abstraction and automation of **OS-level virtualization** on Linux.
-
-In simpler words, Docker is a tool that allows developers, sys-admins etc. to easily deploy their applications in a sandbox (called *containers*) to run on the host operating system i.e. Linux. The key benefit of Docker is that it allows users to **package an application with all of its dependencies into a standardized unit** for software development. Unlike virtual machines, containers do not have the high overhead and hence enable more efficient usage of the underlying system and resources.
+In simpler words, Docker Engine is a tool that allows developers, sys-admins etc. to easily deploy their applications in a sandbox (called *containers*) to run on the host operating system i.e. Linux. The key benefit of Docker Engine is that it allows users to **package an application with all of its dependencies into a standardized unit** for software development. Unlike virtual machines, containers do not have the high overhead and hence enable more efficient usage of the underlying system and resources.
 
 
 ### What are containers?
@@ -43,7 +40,6 @@ This document contains a series of several sections, each of which explains a pa
     -   [2.3 Our First Image](#our-image)
     -   [2.4 Dockerfile](#dockerfiles)
     -   [2.5 Push image to Docker Hub](#pushimage)
-    -   [2.6 Docker compose](#dockercompose)
 -	 [3.0 Enter competition](#dockercompetition)
 	- [3.1 Pull voting-app images](#pullimage)
 	- [3.2 Instruction for building your voting app](#buildvotingapp)
@@ -67,9 +63,7 @@ This document contains a series of several sections, each of which explains a pa
 
 <a id="prerequisites"></a>
 ### Prerequisites
-There are no specific skills needed for this tutorial beyond a basic comfort with the command line and using a text editor. Prior experience in developing web applications will be helpful but is not required. As you proceed further along the tutorial, we'll make use of Docker Hub, so please create an account on each of these websites:
-
-- [Docker Hub](https://hub.docker.com/)
+There are no specific skills needed for this tutorial beyond a basic comfort with the command line and using a text editor. Prior experience in developing web applications will be helpful but is not required. As you proceed further along the tutorial, we'll make use of [Docker Hub](https://hub.docker.com/)
 
 <a id="setup"></a>
 ### Setting up your computer
@@ -195,13 +189,18 @@ $ docker-machine ip default
 You can now open [http://192.168.99.100:32772](http://192.168.99.100:32772) to see your site live! You can also specify a custom port to which the client will forward connections to the container.
 
 ```
-$ docker run --name static-site -e AUTHOR=Your_Name -d -p 8888:80 seqvence/static-site
+$ docker run --name static-site -e -e=Your_Name -d -p 8888:80 seqvence/static-site
 ```
-<img src="https://raw.githubusercontent.com/docker/docker-birthday-3/master/tutorial-images/static.png" title="static">
+<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/static.png" title="static">
 
 I'm sure you agree that was super simple. To deploy this on a real server you would just need to install docker, and run the above docker command.
 
-Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section.
+Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section. But first, let's stop and remove the container since you won't be using it anymore.
+
+```
+$ docker stop static-site
+$ docker rm statis-site
+```
 
 <a id="docker-images"></a>
 ### 2.2 Docker Images
@@ -308,7 +307,7 @@ In order to install Python modules required for our app we need to add to **requ
 Flask==0.10.1
 ```
 
-Create directory template and edit there **index.html** file to have the same content as below:
+Create directory templates and edit there **index.html** file to have the same content as below:
 
 ```
 <html>
@@ -340,31 +339,9 @@ Create directory template and edit there **index.html** file to have the same co
 </html>
 ```
 
-Before you get started on creating the image, let's first test that the application works correctly locally. Step one is to `cd` into the `flask-app` directory and install the dependencies
+The next step now is to create an image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). We'll do that using a **Dockerfile**.
 
-```
-$ cd flask-app
-$ pip install -r requirements.txt
-$ python app.py
- * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
-```
-
-If all goes well, you should see the output as above. Head over to [http://localhost:5000](http://localhost:5000) to see the app in action.
-
-> Note: If `pip install` is giving you permission denied errors, you might need to try running the command as `sudo`.
-
-Looks great doesn't it? The next step now is to create an image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). More specifically, you are going to use the `python:3-onbuild` version of the python image.
-
-What's the `onbuild` version you might ask?
-
-> These images include multiple ONBUILD triggers, which should be all you need to bootstrap most applications. The build will COPY a `requirements.txt` file, RUN `pip install` on said file, and then copy the current directory into `/usr/src/app`.
-
-In other words, the `onbuild` version of the image includes helpers that automate the boring parts of getting an app running. Rather than doing these tasks manually (or scripting these tasks), these images do that work for you. you now have all the ingredients to create our own image - a functioning web app and a base image. How are you going to do that? The answer is - using a **Dockerfile**.
-
-
-Having all the pieces created it is now time to create the **Dockerfile**.
-
-You start by specifying our base image. Use the `FROM` keyword to do that
+Open Dockerfile. Now start by specifying our base image. Use the `FROM` keyword to do that
 
 ```
 FROM alpine:latest
@@ -399,7 +376,7 @@ EXPOSE 5000
 The last step is simply to write the command for running the application which is simply - `python ./app.py`. you use the [CMD](https://docs.docker.com/engine/reference/builder/#cmd) command to do that -
 
 ```
-CMD ["python", "./app.py"]
+CMD ["python", "/usr/src/app/app.py"]
 ```
 
 The primary purpose of `CMD` is to tell the container which command it should run when it is started. With that, our `Dockerfile` is now ready. This is how it looks like -
@@ -485,9 +462,14 @@ $ docker run -p 8888:5000 YOUR_USERNAME/myfirstapp
 
 Head over to the URL above and your app should be live.
 
-<img src="https://raw.githubusercontent.com/docker/docker-birthday-3/master/tutorial-images/catgif.png" title="static">
+<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/catgif.png" title="static">
 
-Congratulations! You have successfully created your first docker image.
+OK now that you are done with the this container, stop and remove it since you won't be using it again.
+
+```
+$ docker stop YOUR_USERNAME/myfirstapp
+$ docker rm YOUR_USERNAME/myfirstapp
+```
 
 <a id="pushimage"></a>
 ### 2.5 Push image to [Docker hub](https://hub.docker.com)
@@ -506,37 +488,32 @@ Pushing the image is achieved by running the following command*:
 ```
 $ docker push YOUR_USERNAME/myfirstapp
 The push refers to a repository [docker.io/YOUR_USERNAME/myfirstapp]
-82ee1a5ef6e9: Pushed 
-ecc18069267f: Pushed 
-e0e4898a45e7: Pushed 
-9698a0f385a6: Pushed 
-acb71626a146: Pushed 
-3f1ec2e56b6b: Pushed 
+82ee1a5ef6e9: Pushed
+ecc18069267f: Pushed
+e0e4898a45e7: Pushed
+9698a0f385a6: Pushed
+acb71626a146: Pushed
+3f1ec2e56b6b: Pushed
 18efc99a87df: Pushed
 ```
 
 \*Replace *YOUR_USERNAME* and *YOUR\_EMAIL\_ADDRESS* with your [Docker hub](https://hub.docker.com) username and your email address used during registration.
-
-<a id="dockercompose"></a>
-### 2.6 [Docker compose](https://docs.docker.com/compose/)
-
-You know now how to build your own Docker image so let's take it to the next level and glue things together. For this assignment you have to run multiple containers and using Docker compose is the best way to achieve that. 
-
-Start by quickly reading the documentation available [here](https://docs.docker.com/compose/overview/).
-
-Once you are familiar with Docker compose install it using the [instructions](https://docs.docker.com/compose/install/).
-
 
 <a id="dockercompetition"></a>
 ## 3 Docker birthday competition
 
 <a id="pullimage"></a>
 ### 3.1 Pull voting-app images
+You know now how to build your own Docker image so let's take it to the next level and glue things together. For this app you have to run multiple containers and using Docker compose is the best way to achieve that.
+
+Start by quickly reading the documentation available [here](https://docs.docker.com/compose/overview/).
+
+Once you are familiar with Docker compose install it using these [instructions](https://docs.docker.com/compose/install/).
 
 Pull the voting-app repository already available at [Github Repo](https://github.com/docker/docker-birthday-3.git/example-voting-app).
 
 ```
-git pull https://github.com/ManoMarks/example-voting-app.git
+git clone https://github.com/docker/docker-birthday-3.git
 ```
 
 A Docker compose file is available for you to start the voting-app and get familiar with the containers and the app.
@@ -544,7 +521,7 @@ A Docker compose file is available for you to start the voting-app and get famil
 <a id="buildvotingapp"></a>
 ### 3.2 Instruction for building your voting app
 
-Navigate to newly created directory (example-voting-app) and run start docker compose using docker-compose.yml.
+Navigate to newly created directory (docker-birthday-3/example-voting-app) and run start docker compose using docker-compose.yml.
 
 ```
 $ docker-compose up -d
@@ -574,7 +551,20 @@ root@f854dff5ce6d:/#
 <a id="modifyapp"></a>
 #### 3.2.1 Modify app.py
 
-In the folder ```example-voting-app/voting-app``` you need to edit the app.py and change the two options for the programming languages you chose. 
+You can now stop the example voting app and remove the images.
+Navigate to directory where docker-compose.yml file is located.
+
+```
+$ docker-compose down 
+```
+
+The command above will stop the containers and remove them. Now you need to remove the images:
+
+```
+$ docker rmi examplevotingapp_result-app examplevotingapp_voting-app examplevotingapp_worker
+```
+
+In the folder ```example-voting-app/voting-app``` you need to edit the app.py and change the two options for the programming languages you chose.
 
 Edit the following lines:
 
@@ -590,12 +580,12 @@ option_a = os.getenv('OPTION_A', "Python")
 option_b = os.getenv('OPTION_B', "Javascript")
 ```
 
-Go ahead start the application, change the application files, rewrite Dockerfiles and Docker compose files. 
+Go ahead start the application, change the application files, rewrite Dockerfiles and Docker compose files.
 
 <a id="modifyconfig"></a>
 #### 3.2.2 Modify config.json
 
-Modifying the config.json is important when validating your submission to Docker Birthday Challenge. 
+Modifying the config.json is important when validating your submission to Docker Birthday Challenge.
 File is located in ```example-voting-app/result-app/views``` directory.
 
 Its content looks now like:
@@ -627,7 +617,7 @@ and you need to replace it with your data:
 
 ---
 **Important:**
- 
+
 - You need to update the file with your data to be able to submit your entry in the competition.
 - *repo* section should contain the name of the images as you tag them and upload them to Docker Hub ( more information at [3.2.5 Push images to Docker Hub](#pushimagestodockerhub) )
 - *location* format is **City, Country**
@@ -641,10 +631,10 @@ However you decide to build your images using Docker files do not forget to test
 
 ###To check:
 
-- File **config.json** must be available in one of the images you are going to build next. 
+- File **config.json** must be available in one of the images you are going to build next.
 	- You need to make its content available via an HTTP call on port 80.
 	- Example of the HTTP GET call:
-	
+
 	```
 	$ curl http://container_id:80/getconfig
 	{
@@ -655,7 +645,7 @@ However you decide to build your images using Docker files do not forget to test
 	  			"johnd/votingapp_result-app"],
 	  "vote":"Python"
 	}
-	``` 
+	```
 - Your containers have an ENTRYPOINT or COMMAND so that when started with the command ```docker run -d image_name ``` they will not exit immediately.
 
 You are all set then. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
@@ -680,7 +670,7 @@ $ docker push johnd/votingapp_voting-app
 $ docker push johnd/votingapp_result-app
 ...
 ```
- 
+
 <a id="entercompetition"></a>
 ### 3.3 Enter competition
 
@@ -691,17 +681,16 @@ There are two ways to submit your entry in the competition:
 
 Double check once again the content of ```config.json file``` to make sure all the information is correct and start all containers from example voting app image **examplevotingapp_result-app**.
 
-
 ```
 $ cd example-voting-app
-$ docker-compose up -d 
+$ docker-compose up -d
 ```  
 
-Get the *ID* of the running container running from image *examplevotingapp_result-app*:
+Get the *ID* of the running container running from image *johnd/examplevotingapp_result-app*:
 
 ```
 $ docker ps -a | grep votingapp_result-app
-5d92bc17124e        examplevotingapp_result-app   "node server.js"    3 minutes ago       Up 3 minutes        192.168.64.2:5001->80/tcp   compassionate_golick
+5d92bc17124e        johnd/examplevotingapp_result-app   "node server.js"    3 minutes ago       Up 3 minutes        192.168.64.2:5001->80/tcp   compassionate_golick
 ```
 
 Access the log files for the container **5d92bc17124e** using the following command:
@@ -726,9 +715,9 @@ Open a browser and access [http://192.168.64.2:5001/birthday.html](http://192.16
 The page displayed will look like the one below:
 
 
-<img src="https://raw.githubusercontent.com/docker/docker-birthday-3/master/tutorial-images/submit_work.png" title="static">
+<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/submit_work.png" title="static">
 
-Button message is more than intuitive so go ahead and press it. 
+Button message is more than intuitive so go ahead and press it.
 
 Soon as you did you need to return to your docker container where you are watching the log files and the output should look like:
 
@@ -750,7 +739,7 @@ Another way of submitting work in the competition is by making use of ```curl```
 $ curl -H "Content-type: application/json" \
 	-X POST -d @config.json \
 	http://dockerize.it/competition
-	
+
 {"response": "http://dockerize.it/competition/56df6ea39be64d001328870e"}
 ```
 The API will return a link where you can check the status of your submission.
