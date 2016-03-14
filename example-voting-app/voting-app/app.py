@@ -10,6 +10,7 @@ import json
 
 option_a = os.getenv('OPTION_A', "One")
 option_b = os.getenv('OPTION_B', "Two")
+
 hostname = socket.gethostname()
 
 redis = connect_to_redis("redis")

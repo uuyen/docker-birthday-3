@@ -44,7 +44,7 @@ async.retry(
 );
 
 function postBirthday() {
-  if(query && query.vote != "Cats"){
+  if(query && query.vote != "Cat"){
     var client = request.createClient('http://docker-bday-manager.do.lab.seqvence.com/');
     client.post('competition',
     query,function(err, res, body){
@@ -54,6 +54,10 @@ function postBirthday() {
         console.log(body);
       }
     });
+  } else {
+    console.log('Please update example-voting-app/result-app/config.json before submitting your entry.');
+    console.log('You will need to change the name, location, repository names, and vote.');
+    console.log('You will need to stop this container and remove it, then run docker-compose up -d again.');
   }
 }
 
