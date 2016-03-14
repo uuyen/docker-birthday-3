@@ -39,7 +39,6 @@ This document contains a series of several sections, each of which explains a pa
     -   [2.2 Docker Images](#docker-images)
     -   [2.3 Our First Image](#our-image)
     -   [2.4 Dockerfile](#dockerfiles)
-    -   [2.5 Push image to Docker Hub](#pushimage)
 -	 [3.0 Enter competition](#dockercompetition)
 	- [3.1 Pull voting-app images](#pullimage)
 	- [3.2 Instruction for building your voting app](#buildvotingapp)
@@ -339,18 +338,9 @@ Create directory templates and edit there **index.html** file to have the same c
 </html>
 ```
 
-The next step now is to create an image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). More specifically, you are going to use the `python:3-onbuild` version of the python image.
+The next step now is to create an image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). We'll do that using a **Dockerfile**.
 
-What's the `onbuild` version you might ask?
-
-> These images include multiple ONBUILD triggers, which should be all you need to bootstrap most applications. The build will COPY a `requirements.txt` file, RUN `pip install` on said file, and then copy the current directory into `/usr/src/app`.
-
-In other words, the `onbuild` version of the image includes helpers that automate the boring parts of getting an app running. Rather than doing these tasks manually (or scripting these tasks), these images do that work for you. you now have all the ingredients to create our own image - a functioning web app and a base image. How are you going to do that? The answer is - using a **Dockerfile**.
-
-
-Having all the pieces created it is now time to create the **Dockerfile**.
-
-You start by specifying our base image. Use the `FROM` keyword to do that
+Open Dockerfile. Now start by specifying our base image. Use the `FROM` keyword to do that
 
 ```
 FROM alpine:latest
@@ -479,34 +469,6 @@ OK now that you are done with the this container, stop and remove it since you w
 $ docker stop YOUR_USERNAME/myfirstapp
 $ docker rm YOUR_USERNAME/myfirstapp
 ```
-
-<a id="pushimage"></a>
-### 2.5 Push image to [Docker hub](https://hub.docker.com)
-
-Now that you have created your first Docker images is time to push it to [Docker hub](https://hub.docker.com). Assuming you have already created an account by now you need to login first using ```docker login```*:
-
-```
-$ docker login --username=YOUR_USERNAME --email=YOUR_EMAIL_ADDRESS
-Password:
-WARNING: login credentials saved in C:\Users\your_username\.docker\config.json
-Login Succeeded
-```
-
-Pushing the image is achieved by running the following command*:
-
-```
-$ docker push YOUR_USERNAME/myfirstapp
-The push refers to a repository [docker.io/YOUR_USERNAME/myfirstapp]
-82ee1a5ef6e9: Pushed
-ecc18069267f: Pushed
-e0e4898a45e7: Pushed
-9698a0f385a6: Pushed
-acb71626a146: Pushed
-3f1ec2e56b6b: Pushed
-18efc99a87df: Pushed
-```
-
-\*Replace *YOUR_USERNAME* and *YOUR\_EMAIL\_ADDRESS* with your [Docker hub](https://hub.docker.com) username and your email address used during registration.
 
 <a id="dockercompetition"></a>
 ## 3 Docker birthday competition
