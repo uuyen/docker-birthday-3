@@ -10,6 +10,7 @@ import json
 
 option_a = os.getenv('OPTION_A', "One")
 option_b = os.getenv('OPTION_B', "Two")
+
 hostname = socket.gethostname()
 
 redis = connect_to_redis("redis")
@@ -36,6 +37,7 @@ def hello():
         hostname=hostname,
         vote=vote,
     ))
+    resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0';
     resp.set_cookie('voter_id', voter_id)
     return resp
 
