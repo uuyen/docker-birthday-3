@@ -481,7 +481,7 @@ Start by quickly reading the documentation available [here](https://docs.docker.
 
 Once you are familiar with Docker compose install it using these [instructions](https://docs.docker.com/compose/install/).
 
-Pull the voting-app repository already available at [Github Repo](https://github.com/docker/docker-birthday-3.git/example-voting-app).
+Pull the voting-app repository already available at [Github Repo](https://github.com/docker/docker-birthday-3.git).
 
 ```
 git clone https://github.com/docker/docker-birthday-3.git
