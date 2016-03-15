@@ -15,7 +15,7 @@ Based on the feedback we’ve received from Docker meetup organizers, we learned
 - [Women Who Go] (http://www.womenwhogo.org/)
 - [Ruby Central] (http://rubycentral.org/)
 
-Without revealing too many details at this point, participants in the training will go through the steps involved in running and developing a simple voting app from a fresh computer using Docker Toolbox and Compose. This simple app will include:
+Participants in the training will go through the steps involved in running and developing a simple voting app from a fresh computer using the Docker Toolbox. This simple app will include:
 
 ![birthday3-app-architecture](./tutorial-images/bd3-architecture.png)
 
