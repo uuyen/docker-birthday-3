@@ -42,7 +42,7 @@ At the training, you will need to bring your own computer. Before you go to a bi
 1. To run the application and participate in the rest of the training, pre-pull these images
 
    ```bash
-   docker pull node:0.10
+   docker pull mhart/alpine-node
    docker pull python:2.7-alpine
    docker pull java:7
    docker pull redis:alpine
