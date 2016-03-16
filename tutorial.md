@@ -41,11 +41,12 @@ This document contains a series of several sections, each of which explains a pa
     -   [2.4 Dockerfile](#dockerfiles)
 -	 [3.0 Enter competition](#dockercompetition)
 	- [3.1 Pull voting-app images](#pullimage)
-	- [3.2 Instruction for building your voting app](#buildvotingapp)
+  - [3.2 3.2 Customize the App](#customize)
 		- [3.2.1 Modify app.py](#modifyapp)
 		- [3.2.2 Modify config.json](#modifyconfig)
-		- [3.2.3 Build and tag images](#buildandtag)
-		- [3.2.4 Push images to Docker Hub](#pushimages)
+    - [3.2.4 Instruction for building your voting app](#buildvotingapp)
+		- [3.2.5 Build and tag images](#buildandtag)
+		- [3.2.6 Push images to Docker Hub](#pushimages)
 	- [3.3 Enter competition](#entercompetition)
 		- [3.3.1 Using the a web page published from container](#usingbutton)
 		- [3.3.2 Using curl](#usingcurl)
@@ -256,7 +257,7 @@ Then there are two more types of images that can be both base and child images, 
 
 - **Official images** Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are typically one word long. In the list of images above, the `python`, `node`, `alpine` and `nginx` images are base images. To find out more about them, check out the [Official Images Documentation](https://docs.docker.com/docker-hub/official_repos/).
 
-- **User images** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as `user/image-name`. The `user` value in the image name is your Docker Hub user name. 
+- **User images** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as `user/image-name`. The `user` value in the image name is your Docker Hub user name.
 
 <a id="our-image"></a>
 ### 2.3 Our First Image
@@ -491,20 +492,75 @@ $ docker rm YOUR_USERNAME/myfirstapp
 ### 3.1 Pull voting-app images
 You know now how to build your own Docker image so let's take it to the next level and glue things together. For this app you have to run multiple containers and using Docker compose is the best way to achieve that.
 
-Start by quickly reading the documentation available [here](https://docs.docker.com/compose/overview/).
-
-Once you are familiar with Docker compose install it using these [instructions](https://docs.docker.com/compose/install/).
-
 Pull the voting-app repository already available at [Github Repo](https://github.com/docker/docker-birthday-3.git).
 
 ```
 git clone https://github.com/docker/docker-birthday-3.git
 ```
+<a id="customize"></a>
+### 3.2 Customize the App
 
-A Docker compose file is available for you to start the voting-app and get familiar with the containers and the app.
+<a id="modifyapp"></a>
+#### 3.2.1 Modify app.py
+
+In the folder ```example-voting-app/voting-app``` you need to edit the app.py and change the two options for the programming languages you chose.
+
+Edit the following lines:
+
+```
+option_a = os.getenv('OPTION_A', "One")
+option_b = os.getenv('OPTION_B', "Two")
+```
+
+to look like:
+
+```
+option_a = os.getenv('OPTION_A', "Python")
+option_b = os.getenv('OPTION_B', "Javascript")
+```
+
+<a id="modifyconfig"></a>
+#### 3.2.2 Modify config.json
+
+Modifying the config.json is important when validating your submission to Docker Birthday Challenge.
+The file is located in ```example-voting-app/result-app/views``` directory.
+
+This is what the file looks now like:
+
+```
+{
+  "name":"Gordon",
+  "twitter":"@docker",
+  "location":"San Francisco, CA, USA",
+  "repo":["example/examplevotingapp_voting-app",\
+  			"example/examplevotingapp_result-app"],
+  "vote":"Cats"
+}
+```
+
+Replace it with your data:
+
+```
+{
+  "name":"John Doe",
+  "twitter":"@djohnd",
+  "location":"San Francisco, CA, USA",
+  "repo":["johnd/votingapp_voting-app", \
+  			"johnd/votingapp_result-app"],
+  "vote":"Python"
+}
+```
+----
+
+---
+**Important:**
+
+- You need to update the file with your data to be able to submit your entry in the competition.
+- *repo* section should contain the name of the images as you tag them and upload them to Docker Hub ( more information at [3.2.6 Push images to Docker Hub](#pushimagestodockerhub) )
+- *location* format is **City, Country**
 
 <a id="buildvotingapp"></a>
-### 3.2 Instruction for building your voting app
+### 3.2.3 Instruction for building your voting app
 
 Navigate to newly created directory (docker-birthday-3/example-voting-app) and run start docker compose using docker-compose.yml.
 
@@ -533,71 +589,12 @@ Connect to a shell within the containers using the following command.
 $ docker exec -t -i f854dff5ce6d bash
 root@f854dff5ce6d:/#
 ```
-<a id="modifyapp"></a>
-#### 3.2.1 Modify app.py
 
-In the folder ```example-voting-app/voting-app``` you need to edit the app.py and change the two options for the programming languages you chose.
-
-Edit the following lines:
-
-```
-option_a = os.getenv('OPTION_A', "One")
-option_b = os.getenv('OPTION_B', "Two")
-```
-
-to look like:
-
-```
-option_a = os.getenv('OPTION_A', "Python")
-option_b = os.getenv('OPTION_B', "Javascript")
-```
-
-Go ahead start the application, change the application files, rewrite Dockerfiles and Docker compose files.
-
-<a id="modifyconfig"></a>
-#### 3.2.2 Modify config.json
-
-Modifying the config.json is important when validating your submission to Docker Birthday Challenge.
-File is located in ```example-voting-app/result-app/views``` directory.
-
-Its content looks now like:
-
-```
-{
-  "name":"Gordon",
-  "twitter":"@docker",
-  "location":"San Francisco, CA, USA",
-  "repo":["example/examplevotingapp_voting-app",\
-  			"example/examplevotingapp_result-app"],
-  "vote":"Cats"
-}
-```
-
-and you need to replace it with your data:
-
-```
-{
-  "name":"John Doe",
-  "twitter":"@djohnd",
-  "location":"San Francisco, CA, USA",
-  "repo":["johnd/votingapp_voting-app", \
-  			"johnd/votingapp_result-app"],
-  "vote":"Python"
-}
-```
-----
-
----
-**Important:**
-
-- You need to update the file with your data to be able to submit your entry in the competition.
-- *repo* section should contain the name of the images as you tag them and upload them to Docker Hub ( more information at [3.2.5 Push images to Docker Hub](#pushimagestodockerhub) )
-- *location* format is **City, Country**
 
 ---
 ---
 <a id="buildandtag"></a>
-#### 3.2.3 Build and tag images
+#### 3.2.4 Build and tag images
 
 However you decide to build your images using Docker files do not forget to test your application throughly.
 
@@ -632,7 +629,7 @@ $ docker build --no-cache -t johnd/votingapp_result-app .
 ```
 
 <a id="pushimages"></a>
-#### 3.2.4 Push images to Docker Hub
+#### 3.2.6 Push images to Docker Hub
 
 Quickly, push the images to Docker hub using:
 
