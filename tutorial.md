@@ -499,6 +499,9 @@ Pull the voting-app repository already available at [Github Repo](https://github
 ```
 git clone https://github.com/docker/docker-birthday-3.git
 ```
+<a id="customize"></a>
+### 3.2 Customize the app
+
 <a id="modifyapp"></a>
 #### 3.2.1 Modify app.py
 
@@ -520,7 +523,6 @@ option_b = os.getenv('OPTION_B', "Javascript")
 
 <a id="modifyconfig"></a>
 #### 3.2.2 Modify config.json
-<a id="buildvotingapp"></a>
 
 **Modifying the config.json is important when validating your completion of the Docker Birthday Training.**
 File is located in ```example-voting-app/result-app/views``` directory.
