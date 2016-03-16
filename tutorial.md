@@ -493,8 +493,6 @@ You know now how to build your own Docker image so let's take it to the next lev
 
 Start by quickly reading the documentation available [here](https://docs.docker.com/compose/overview/).
 
-Once you are familiar with Docker compose install it using these [instructions](https://docs.docker.com/compose/install/).
-
 Pull the voting-app repository already available at [Github Repo](https://github.com/docker/docker-birthday-3.git).
 
 ```
