@@ -581,7 +581,7 @@ and you need to replace it with your data:
 ---
 **Important:**
 
-- You need to update the file with your data to be able to submit your entry in the competition.
+- You need to update the file with your data to be able to succesfully complete the training.
 - *repo* section should contain the name of the images as you tag them and upload them to Docker Hub ( more information at [3.2.5 Push images to Docker Hub](#pushimagestodockerhub) )
 - *location* format is **City, Country**
 
