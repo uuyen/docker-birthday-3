@@ -44,7 +44,7 @@ This document contains a series of several sections, each of which explains a pa
   - [3.2 Customize the App](#customize)
 		- [3.2.1 Modify app.py](#modifyapp)
 		- [3.2.2 Modify config.json](#modifyconfig)
-    - [3.2.3 Building and running the app](#buildvotingapp)
+		- [3.2.3 Building and running the app](#buildvotingapp)
 		- [3.2.4 Build and tag images](#buildandtag)
 		- [3.2.5 Push images to Docker Hub](#pushimages)
 	- [3.3 Enter competition](#confirmtraining)
@@ -587,7 +587,7 @@ $ docker build --no-cache -t johnd/votingapp_result-app .
 ```
 
 <a id="pushimages"></a>
-#### 3.2.4 Push images to Docker Hub
+#### 3.2.5 Push images to Docker Hub
 
 Quickly, push the images to Docker hub using:
 
