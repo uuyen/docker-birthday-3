@@ -582,7 +582,7 @@ and you need to replace it with your data:
 **Important:**
 
 - You need to update the file with your data to be able to succesfully complete the training.
-- *repo* section should contain the name of the images as you tag them and upload them to Docker Hub ( more information at [3.2.5 Push images to Docker Hub](#pushimagestodockerhub) )
+- *repo* section should contain the name of the images as you tag them and upload them to Docker Hub ( more information at [3.2.4 Push images to Docker Hub](#pushimages) )
 - *location* format is **City, Country**
 
 ---
@@ -590,7 +590,7 @@ and you need to replace it with your data:
 <a id="buildandtag"></a>
 #### 3.2.3 Build and tag images
 
-However you decide to build your images using Docker files do not forget to test your application throughly.
+However you decide to build your images using Dockerfiles do not forget to test your application thoroughly.
 
 ###To check:
 
