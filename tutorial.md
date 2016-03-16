@@ -49,7 +49,7 @@ This document contains a series of several sections, each of which explains a pa
 		- [3.2.5 Push images to Docker Hub](#pushimages)
 	- [3.3 Enter competition](#confirmtraining)
 		- [3.3.1 Using the a web page published from container](#usingbutton)
-		- [3.3.2 Using curl](#usingcurl)
+  	- [3.3.2 Using curl](#usingcurl)
 	- [3.4 Check your submission status](#checkstatus)
 -   [4.0 Wrap Up](#wrap-up)
 -   [References](#references)
