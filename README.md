@@ -46,7 +46,7 @@ At the training, you will need to bring your own computer. Before you go to a bi
    ```bash
    docker pull mhart/alpine-node
    docker pull python:2.7-alpine
-   docker pull java:7
+   docker pull java:openjdk-8-jdk-alpine
    docker pull redis:alpine
    docker pull postgres:9.4
    ```
