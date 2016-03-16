@@ -39,14 +39,15 @@ This document contains a series of several sections, each of which explains a pa
     -   [2.2 Docker Images](#docker-images)
     -   [2.3 Our First Image](#our-image)
     -   [2.4 Dockerfile](#dockerfiles)
--	 [3.0 Enter competition](#dockercompetition)
+-	 [3.0 Birthday training](#dockercompetition)
 	- [3.1 Pull voting-app images](#pullimage)
-	- [3.2 Instruction for building your voting app](#buildvotingapp)
+  - [3.2 Customize the App](#customize)
 		- [3.2.1 Modify app.py](#modifyapp)
 		- [3.2.2 Modify config.json](#modifyconfig)
-		- [3.2.3 Build and tag images](#buildandtag)
-		- [3.2.4 Push images to Docker Hub](#pushimages)
-	- [3.3 Enter competition](#entercompetition)
+    - [3.2.3 Building and running the app](#buildvotingapp)
+		- [3.2.4 Build and tag images](#buildandtag)
+		- [3.2.5 Push images to Docker Hub](#pushimages)
+	- [3.3 Enter competition](#confirmtraining)
 		- [3.3.1 Using the a web page published from container](#usingbutton)
 		- [3.3.2 Using curl](#usingcurl)
 	- [3.4 Check your submission status](#checkstatus)
@@ -485,11 +486,11 @@ $ docker rm YOUR_USERNAME/myfirstapp
 ```
 
 <a id="dockercompetition"></a>
-## 3 Docker birthday competition
+## 3.0 Docker birthday training
 
 <a id="pullimage"></a>
-### 3.1 Pull voting-app images
-You know now how to build your own Docker image so let's take it to the next level and glue things together. For this app you have to run multiple containers and using Docker compose is the best way to achieve that.
+### 3.1 Pull voting-app
+You know now how to build your own Docker image so let's take it to the next level and glue things together. For this app you have to run multiple containers. Docker Compose is the best way to achieve that.
 
 Start by quickly reading the documentation available [here](https://docs.docker.com/compose/overview/).
 
@@ -498,32 +499,6 @@ Pull the voting-app repository already available at [Github Repo](https://github
 ```
 git clone https://github.com/docker/docker-birthday-3.git
 ```
-
-A Docker compose file is available for you to start the voting-app and get familiar with the containers and the app.
-
-<a id="buildvotingapp"></a>
-### 3.2 Instruction for building your voting app
-
-Navigate to newly created directory (docker-birthday-3/example-voting-app) and run start docker compose using docker-compose.yml.
-
-```
-$ docker-compose up -d
-```
-
-Once all containers are up you can check their status:
-
-```
-$ docker ps -a
-CONTAINER ID        IMAGE                         COMMAND                  CREATED              STATUS              PORTS                     NAMES
-f854dff5ce6d        examplevotingapp_result-app   "node server.js"         About a minute ago   Up About a minute   0.0.0.0:5001->80/tcp      examplevotingapp_result-app_1
-4ff9f295f383        examplevotingapp_voting-app   "python app.py"          2 minutes ago        Up 2 minutes        0.0.0.0:5000->80/tcp      examplevotingapp_voting-app_1
-fd1bf9d1b8c0        examplevotingapp_worker       "/usr/lib/jvm/java-7-"   3 minutes ago        Up 3 minutes                                  examplevotingapp_worker_1
-32cd0d514f10        redis                         "/entrypoint.sh redis"   6 minutes ago        Up 6 minutes        0.0.0.0:32771->6379/tcp   examplevotingapp_redis_1
-be5b0b21ab07        postgres:9.4                  "/docker-entrypoint.s"   6 minutes ago        Up 6 minutes        5432/tcp                  examplevotingapp_db_1
-```
-
-Browse around the containers to understand the structure and how the application is built.
-
 <a id="modifyapp"></a>
 #### 3.2.1 Modify app.py
 
@@ -543,15 +518,14 @@ option_a = os.getenv('OPTION_A', "Python")
 option_b = os.getenv('OPTION_B', "Javascript")
 ```
 
-Go ahead start the application, change the application files, rewrite Dockerfiles and Docker compose files.
-
 <a id="modifyconfig"></a>
 #### 3.2.2 Modify config.json
+<a id="buildvotingapp"></a>
 
-Modifying the config.json is important when validating your completion of the Docker Birthday Training.
+**Modifying the config.json is important when validating your completion of the Docker Birthday Training.**
 File is located in ```example-voting-app/result-app/views``` directory.
 
-Its content looks now like:
+This is what the file looks now like:
 
 ```
 {
@@ -564,7 +538,7 @@ Its content looks now like:
 }
 ```
 
-and you need to replace it with your data:
+Replace it with your data:
 
 ```
 {
@@ -576,40 +550,28 @@ and you need to replace it with your data:
   "vote":"Python"
 }
 ```
-----
+<a id="buildvotingapp"></a>
+### 3.2.3 Building and running the app
 
----
-**Important:**
+Navigate to newly created directory (docker-birthday-3/example-voting-app) and run start docker compose using docker-compose.yml.
 
-- You need to update the file with your data to be able to succesfully complete the training.
-- *repo* section should contain the name of the images as you tag them and upload them to Docker Hub ( more information at [3.2.4 Push images to Docker Hub](#pushimages) )
-- *location* format is **City, Country**
+```
+$ docker-compose up -d
+```
 
----
----
+Once all containers are up you can check their status:
+
+```
+$ docker ps -a
+CONTAINER ID        IMAGE                         COMMAND                  CREATED              STATUS              PORTS                     NAMES
+f854dff5ce6d        examplevotingapp_result-app   "node server.js"         About a minute ago   Up About a minute   0.0.0.0:5001->80/tcp      examplevotingapp_result-app_1
+4ff9f295f383        examplevotingapp_voting-app   "python app.py"          2 minutes ago        Up 2 minutes        0.0.0.0:5000->80/tcp      examplevotingapp_voting-app_1
+fd1bf9d1b8c0        examplevotingapp_worker       "/usr/lib/jvm/java-7-"   3 minutes ago        Up 3 minutes                                  examplevotingapp_worker_1
+32cd0d514f10        redis                         "/entrypoint.sh redis"   6 minutes ago        Up 6 minutes        0.0.0.0:32771->6379/tcp   examplevotingapp_redis_1
+be5b0b21ab07        postgres:9.4                  "/docker-entrypoint.s"   6 minutes ago        Up 6 minutes        5432/tcp                  examplevotingapp_db_1
+```
 <a id="buildandtag"></a>
-#### 3.2.3 Build and tag images
-
-However you decide to build your images using Dockerfiles do not forget to test your application thoroughly.
-
-###To check:
-
-- File **config.json** must be available in one of the images you are going to build next.
-	- You need to make its content available via an HTTP call on port 80.
-	- Example of the HTTP GET call:
-
-	```
-	$ curl http://container_id:80/getconfig
-	{
-	  "name":"John Doe",
-	  "twitter":"@djohnd",
-	  "location":"San Francisco, CA, USA",
-	  "repo":["johnd/votingapp_voting-app", \
-	  			"johnd/votingapp_result-app"],
-	  "vote":"Python"
-	}
-	```
-- Your containers have an ENTRYPOINT or COMMAND so that when started with the command ```docker run -d image_name ``` they will not exit immediately.
+#### 3.2.4 Build and tag images
 
 You are all set then. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
 
@@ -634,8 +596,8 @@ $ docker push johnd/votingapp_result-app
 ...
 ```
 
-<a id="entercompetition"></a>
-### 3.3 Enter competition
+<a id="confirmtraining"></a>
+### 3.3 Confirm your completion
 
 There are two ways to submit your entry in the competition:
 
