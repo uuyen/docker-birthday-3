@@ -548,7 +548,7 @@ Go ahead start the application, change the application files, rewrite Dockerfile
 <a id="modifyconfig"></a>
 #### 3.2.2 Modify config.json
 
-Modifying the config.json is important when validating your submission to Docker Birthday Challenge.
+Modifying the config.json is important when validating your completion of the Docker Birthday Training.
 File is located in ```example-voting-app/result-app/views``` directory.
 
 Its content looks now like:
