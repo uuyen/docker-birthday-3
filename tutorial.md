@@ -95,6 +95,7 @@ The `pull` command fetches the busybox **image** from the **Docker registry** an
 $ docker images
 REPOSITORY              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 busybox                 latest              c51f86c28340        4 weeks ago         1.109 MB
+hello-world             latest              690ed74de00f        5 months ago        960 B
 ```
 
 <a id="dockerrun"></a>
@@ -112,6 +113,12 @@ $ docker run busybox echo "hello from busybox"
 hello from busybox
 ```
 OK, that's some actual output. In this case, the Docker client dutifully ran the `echo` command in our busybox container and then exited it. If you've noticed, all of that happened pretty quickly. Imagine booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast! Ok, now it's time to see the `docker ps` command. The `docker ps` command shows you all containers that are currently running.
+
+Try another command.
+```
+$ docker run busybox uptime
+00:16:48 up  1:48,  0 users,  load average: 0.00, 0.01, 0.04
+```
 
 ```
 $ docker ps
@@ -142,8 +149,8 @@ That concludes a whirlwind tour of the `docker run` command which would most lik
 ### 1.2 Terminology
 In the last section, you used a lot of Docker-specific jargon which might be confusing to some. So before you go further, let me clarify some terminology that is used frequently in the Docker ecosystem.
 
-- *Images* - The blueprints of our application which form the basis of containers. In the demo above, you used the `docker pull` command to download the **busybox** image.
-- *Containers* - Created from Docker images and run the actual application. you create a container using `docker run` which you did using the busybox image that you downloaded. A list of running containers can be seen using the `docker ps` command.
+- *Images* - The blueprints of our application which form the basis of containers. In the demo above, you used the `docker pull` command to download the **busybox** image. When you executed the command `docker run hello-world`, it also did a `docker pull` behind the scenes to download the **hello-world** image.
+- *Containers* - Created from Docker images and run the actual application. You create a container using `docker run` which you did using the busybox image that you downloaded. A list of running containers can be seen using the `docker ps` command.
 - *Docker Daemon* - The background service running on the host that manages building, running and distributing Docker containers. The daemon is the process that runs in the operation system to which clients talk to.
 - *Docker Client* - The command line tool that allows the user to interact with the daemon.
 - *Docker Hub* - A [registry](https://hub.docker.com/explore/) of Docker images. You can think of the registry as a directory of all available Docker images. You'll be using this later in this tutorial.
@@ -157,7 +164,7 @@ Great! So you have now looked at `docker run`, played with a docker container an
 ### 2.1 Static Sites
 Let's start by taking baby-steps. The first thing we're going to look at is how you can run a dead-simple static website. You're going to pull a docker image from the docker hub, running the container and see how easy it so to run a webserver.
 
-Let's begin. The image that you are going to use is a single-page website that was already created for the purposes of this demo and hosted it on the [registry](https://hub.docker.com/r/seqvence/static-site/) - `seqvence/static-site`. you can download and run the image directly in one go using `docker run`.
+Let's begin. The image that you are going to use is a single-page website that was already created for the purposes of this demo and hosted it on the [registry](https://hub.docker.com/r/seqvence/static-site/) - `seqvence/static-site`. You can download and run the image directly in one go using `docker run`.
 
 ```
 $ docker run seqvence/static-site
@@ -198,7 +205,7 @@ Now that you've seen how to run a webserver inside a docker image, you must be w
 
 ```
 $ docker stop static-site
-$ docker rm statis-site
+$ docker rm static-site
 ```
 
 <a id="docker-images"></a>
@@ -223,11 +230,18 @@ alpine                 3.3                 70c557e50ed6        8 days ago       
 java                   7                   21f6ce84e43c        8 days ago          587.7 MB
 ```
 
-The above gives a list of images that I've pulled from the registry and the ones that I've created myself (we'll shortly see how). The `TAG` refers to a particular snapshot of the image and the `ID` is the corresponding unique identifier for that image.
+The above gives a list of images that I've pulled from the registry and the ones that I've created myself (we'll shortly see how). The list will most likely not correspond to the list of images that you have currently on your machine. The `TAG` refers to a particular snapshot of the image and the `ID` is the corresponding unique identifier for that image.
 
-For simplicity, you can think of an image akin to a git repository - images can be [committed](https://docs.docker.com/engine/reference/commandline/commit/) with changes and have multiple versions. When you provide a specific version number, the client defaults to `latest`. For example, you can pull a specific version of `ubuntu` image
+For simplicity, you can think of an image akin to a git repository - images can be [committed](https://docs.docker.com/engine/reference/commandline/commit/) with changes and have multiple versions. When you provide a specific version number, the client defaults to `latest`. For example, you can pull a specific version of `ubuntu` image as follows:
 ```
 $ docker pull ubuntu:12.04
+```
+
+**NOTE**: Do not execute the above command. It is only for your reference.
+
+If you do not specify the version number of the image, then as mentioned the Docker client with default to a version named `latest`. So for example, the `docker pull` command given below will pull an image named `ubuntu:latest`:
+```
+$ docker pull ubuntu
 ```
 
 To get a new Docker image you can either get it from a registry (such as the docker hub) or create your own. There are tens of thousands of images available on [Docker hub](https://hub.docker.com). You can also search for images directly from the command line using `docker search`.
@@ -242,7 +256,7 @@ Then there are two more types of images that can be both base and child images, 
 
 - **Official images** Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are typically one word long. In the list of images above, the `python`, `node`, `alpine` and `nginx` images are base images. To find out more about them, check out the [Official Images Documentation](https://docs.docker.com/docker-hub/official_repos/).
 
-- **User images** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as `user/image-name`.
+- **User images** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as `user/image-name`. The `user` value in the image name is your Docker Hub user name. 
 
 <a id="our-image"></a>
 ### 2.3 Our First Image
