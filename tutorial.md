@@ -524,13 +524,6 @@ be5b0b21ab07        postgres:9.4                  "/docker-entrypoint.s"   6 min
 
 Browse around the containers to understand the structure and how the application is built.
 
-Connect to a shell within the containers using the following command.
-
-
-```
-$ docker exec -t -i f854dff5ce6d bash
-root@f854dff5ce6d:/#
-```
 <a id="modifyapp"></a>
 #### 3.2.1 Modify app.py
 
