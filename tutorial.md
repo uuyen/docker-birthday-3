@@ -39,7 +39,6 @@ This document contains a series of several sections, each of which explains a pa
     -   [2.2 Docker Images](#docker-images)
     -   [2.3 Our First Image](#our-image)
     -   [2.4 Dockerfile](#dockerfiles)
-    -   [2.5 Push image to Docker Hub](#pushimage)
 -	 [3.0 Enter competition](#dockercompetition)
 	- [3.1 Pull voting-app images](#pullimage)
 	- [3.2 Instruction for building your voting app](#buildvotingapp)
@@ -471,34 +470,6 @@ $ docker stop YOUR_USERNAME/myfirstapp
 $ docker rm YOUR_USERNAME/myfirstapp
 ```
 
-<a id="pushimage"></a>
-### 2.5 Push image to [Docker hub](https://hub.docker.com)
-
-Now that you have created your first Docker images is time to push it to [Docker hub](https://hub.docker.com). Assuming you have already created an account by now you need to login first using ```docker login```*:
-
-```
-$ docker login --username=YOUR_USERNAME --email=YOUR_EMAIL_ADDRESS
-Password:
-WARNING: login credentials saved in C:\Users\your_username\.docker\config.json
-Login Succeeded
-```
-
-Pushing the image is achieved by running the following command*:
-
-```
-$ docker push YOUR_USERNAME/myfirstapp
-The push refers to a repository [docker.io/YOUR_USERNAME/myfirstapp]
-82ee1a5ef6e9: Pushed
-ecc18069267f: Pushed
-e0e4898a45e7: Pushed
-9698a0f385a6: Pushed
-acb71626a146: Pushed
-3f1ec2e56b6b: Pushed
-18efc99a87df: Pushed
-```
-
-\*Replace *YOUR_USERNAME* and *YOUR\_EMAIL\_ADDRESS* with your [Docker hub](https://hub.docker.com) username and your email address used during registration.
-
 <a id="dockercompetition"></a>
 ## 3 Docker birthday competition
 
@@ -510,7 +481,7 @@ Start by quickly reading the documentation available [here](https://docs.docker.
 
 Once you are familiar with Docker compose install it using these [instructions](https://docs.docker.com/compose/install/).
 
-Pull the voting-app repository already available at [Github Repo](https://github.com/docker/docker-birthday-3.git/example-voting-app).
+Pull the voting-app repository already available at [Github Repo](https://github.com/docker/docker-birthday-3.git).
 
 ```
 git clone https://github.com/docker/docker-birthday-3.git
@@ -550,19 +521,6 @@ root@f854dff5ce6d:/#
 ```
 <a id="modifyapp"></a>
 #### 3.2.1 Modify app.py
-
-You can now stop the example voting app and remove the images.
-Navigate to directory where docker-compose.yml file is located.
-
-```
-$ docker-compose down 
-```
-
-The command above will stop the containers and remove them. Now you need to remove the images:
-
-```
-$ docker rmi examplevotingapp_result-app examplevotingapp_voting-app examplevotingapp_worker
-```
 
 In the folder ```example-voting-app/voting-app``` you need to edit the app.py and change the two options for the programming languages you chose.
 
@@ -681,16 +639,17 @@ There are two ways to submit your entry in the competition:
 
 Double check once again the content of ```config.json file``` to make sure all the information is correct and start all containers from example voting app image **examplevotingapp_result-app**.
 
+
 ```
 $ cd example-voting-app
 $ docker-compose up -d
 ```  
 
-Get the *ID* of the running container running from image *johnd/examplevotingapp_result-app*:
+Get the *ID* of the running container running from image *examplevotingapp_result-app*:
 
 ```
 $ docker ps -a | grep votingapp_result-app
-5d92bc17124e        johnd/examplevotingapp_result-app   "node server.js"    3 minutes ago       Up 3 minutes        192.168.64.2:5001->80/tcp   compassionate_golick
+5d92bc17124e        examplevotingapp_result-app   "node server.js"    3 minutes ago       Up 3 minutes        192.168.64.2:5001->80/tcp   compassionate_golick
 ```
 
 Access the log files for the container **5d92bc17124e** using the following command:
