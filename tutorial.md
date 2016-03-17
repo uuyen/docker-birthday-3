@@ -555,7 +555,7 @@ Replace it with your data:
 ```
 {
   "name":"John Doe",
-  "twitter":"@dYOUR_DOCKER_ID",
+  "twitter":"@YOUR_DOCKER_ID",
   "location":"San Francisco, CA, USA",
   "repo":["YOUR_DOCKER_ID/votingapp_voting-app", \
   			"YOUR_DOCKER_ID/votingapp_result-app"],
@@ -565,7 +565,7 @@ Replace it with your data:
 <a id="buildvotingapp"></a>
 ### 3.2.3 Building and running the app
 
-Navigate to newly created directory (docker-birthday-3/example-voting-app) and run start docker compose using docker-compose.yml.
+Navigate to the directory docker-birthday-3/example-voting-app and run start docker compose using docker-compose.yml.
 
 ```
 $ docker-compose up -d
