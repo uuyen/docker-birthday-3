@@ -728,7 +728,7 @@ The page displayed will look like the one below:
 
 Press the button.
 
-Soon as you did you need to return to your docker container where you are watching the log files and the output should look like:
+As soon as you did, you need to return to your docker container where you are watching the log files and the output should look like:
 
 ```
 Thu, 10 Mar 2016 21:48:15 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:77:9
