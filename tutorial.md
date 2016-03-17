@@ -735,20 +735,22 @@ The page displayed will look like the one below:
 
 Press the button.
 
-As soon as you did, you need to return to your docker container where you are watching the log files and the output should look like:
+As soon as you did, return to your docker container where you are watching the log files and the output should look like:
 
 ```
 Thu, 10 Mar 2016 21:48:15 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:77:9
 Thu, 10 Mar 2016 21:48:16 GMT body-parser deprecated undefined extended: provide extended option at node_modules/body-parser/index.js:105:29
 App running on port 80
 Connected to db
-http://dockerize.it/competition/YOUR_SUBMISSION_ID
+YOUR_SUBMISSION_ID
 ```
-You can navigate to http://dockerize.it/competition/YOUR_SUBMISSION_ID to check the status of your submission.
+In order to check the status of your submission, copy your submission ID above and go to [dockerize.it](http://dockerize.it/). Paste the submission ID in the submission box above the map. It will take a few minutes for the submission status to go from "pending' to "accepted" and for your pin to appear on the map!
 
 <a id="wrap-up"></a>
 ## 4.0 Wrap Up
-And that's a wrap! You are now ready to take the container world by storm! If you followed along till the very end then you should definitely be proud of yourself. You learned how to setup docker, run your own containers, and use Docker Compose to create a multi-container application.
+And that's a wrap! You are now ready to take the container world by storm! If you followed along till the very end then you should definitely be proud of yourself. You learned how to setup docker, run your own containers, use Docker Machine to create a Docker host and use Docker Compose to create a multi-container application.
+
+Invite your friends to complete this [Docker Birthday Training] (https://github.com/docker/docker-birthday-3/)
 
 <a id="next-steps"></a>
 ### 4.1 Next Steps
