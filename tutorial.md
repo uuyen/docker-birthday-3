@@ -280,7 +280,7 @@ Then there are two more types of images that can be both base and child images, 
 <a id="our-image"></a>
 ### 2.3 Our First Image
 
-Now that you have a better understanding of images, it's time to create our own. Our goal in this section will be to create an image that sandboxes a simple [Flask](http://flask.pocoo.org) application. For the purposes of this workshop, I've already created a fun, little [Flask app](https://github.com/docker/Docker-Birthday-3/flask-app) that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats? If you haven't already, please go ahead the clone the repository locally.
+Now that you have a better understanding of images, it's time to create our own. Our goal in this section will be to create an image that sandboxes a simple [Flask](http://flask.pocoo.org) application. For the purposes of this workshop, I've already created a fun, little [Flask app](https://github.com/docker/Docker-Birthday-3/flask-app) that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats? If you haven't already, please go ahead and clone the repository locally.
 
 <a id="dockerfiles"></a>
 ### 2.4 Dockerfile
@@ -339,7 +339,7 @@ In order to install Python modules required for our app we need to add to **requ
 Flask==0.10.1
 ```
 
-Create directory templates and edit there **index.html** file to have the same content as below:
+Create `directory` templates and create a **index.html** file in that directory, to have the same content as below:
 
 ```
 <html>
@@ -371,7 +371,7 @@ Create directory templates and edit there **index.html** file to have the same c
 </html>
 ```
 
-The next step now is to create an image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). We'll do that using a **Dockerfile**.
+The next step now is to create a Docker image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). We'll do that using a **Dockerfile**.
 
 Open Dockerfile. Now start by specifying our base image. Use the `FROM` keyword to do that
 
@@ -379,7 +379,13 @@ Open Dockerfile. Now start by specifying our base image. Use the `FROM` keyword 
 FROM alpine:latest
 ```
 
-The next step usually is to write the commands of copying the files and installing the dependencies. Create a directory for the app using [RUN](https://docs.docker.com/engine/reference/builder/#run) command:
+The next step usually is to write the commands of copying the files and installing the dependencies. 
+But first we will install the Python pip package to the alpine linux distribution. This will not just install the pip package but any other dependencies too, which includes the python interpreter. Add the following command next:
+```
+RUN apk add --update py-pip
+```
+
+Next, let us add the files that make up the Flask Application. Create a directory for the app using [RUN](https://docs.docker.com/engine/reference/builder/#run) command:
 
 ```
 RUN mkdir -p /usr/src/app/templates
@@ -438,10 +444,9 @@ EXPOSE 5000
 CMD ["python", "/usr/src/app/app.py"]
 ```
 
+Now that you finally have your `Dockerfile`, you can now build your image. The `docker build` command does the heavy-lifting of creating a docker image from a `Dockerfile`.
 
-Now that you finally have our `Dockerfile`, you can now build our image. The `docker build` command does the heavy-lifting of creating a docker image from a `Dockerfile`.
-
-Let's run the following:
+While running the `docker build` command give below, make sure to replace YOUR_USERNAME  with your username. This username should be the same on you created when you registered on [Docker hub](https://hub.docker.com). If you haven't done that yet, please go ahead and create an account. The `docker build` command is quite simple - it takes an optional tag name with `-t` and a location of the directory containing the `Dockerfile` - the `.` indicates the current directory:
 
 ```
 $ docker build -t YOUR_USERNAME/myfirstapp .
@@ -481,26 +486,29 @@ Step 5 : CMD python ./app.py
 Removing intermediate container 20168af7b1dd
 Successfully built beedea106164
 ```
-While running the command yourself, make sure to replace YOUR_USERNAME  with your username. This username should be the same on you created when you registered on [Docker hub](https://hub.docker.com). If you haven't done that yet, please go ahead and create an account. The `docker build` command is quite simple - it takes an optional tag name with `-t` and a location of the directory containing the `Dockerfile`.
 
-If you don't have the `alpine:latest` image, the client will first pull the image and then create your image. Therefore, your output on running the command will look different from mine. Look carefully and you'll notice that the on-build triggers were executed correctly. If everything went well, your image should be ready! Run `docker images` and see if your image shows.
+If you don't have the `alpine:latest` image, the client will first pull the image and then create your image. Therefore, your output on running the command will look different from mine. Look carefully and you'll notice that the on-build triggers were executed correctly. If everything went well, your image should be ready! Run `docker images` and see if your image (`YOUR_USERNAME\myfirstapp`) shows.
 
 The last step in this section is to run the image and see if it actually works.
 
 ```
-$ docker run -p 8888:5000 YOUR_USERNAME/myfirstapp
+$ docker run -p --name myfirstapp 8888:5000 YOUR_USERNAME/myfirstapp
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ```
 
-Head over to the URL above and your app should be live.
+Head over to the URL above and your app should be live. You may need to open up another terminal and determine the container ip address. The URL will be http://`CONTAINER-IP-ADDRESS`:8888.
 
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/catgif.png" title="static">
 
+Hit the Refresh button in the web browser to see a few more cat images.
+
 OK now that you are done with the this container, stop and remove it since you won't be using it again.
 
+Open another terminal window and execute the following commands:
+
 ```
-$ docker stop YOUR_USERNAME/myfirstapp
-$ docker rm YOUR_USERNAME/myfirstapp
+$ docker stop myfirstapp
+$ docker rm myfirstapp
 ```
 
 <a id="dockercompetition"></a>
