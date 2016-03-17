@@ -171,7 +171,26 @@ $ docker run seqvence/static-site
 ```
 Since the image doesn't exist locally, the client will first fetch the image from the registry and then run the image. If all goes well, you should see a greeting message with a short message (`This is being served from a docker container`) about the webserver  in your browser. Okay now that the server is running, how do see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
 
-Well in this case, the client is not exposing any ports so you need to re-run the `docker run` command to publish ports and pass your name to the container to customize the message displayed. While were at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
+Well in this case, the client is not exposing any ports so you need to re-run the `docker run` command to publish ports and pass your name to the container to customize the message displayed. While we are at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
+
+Before we look at the **detached** mode, we should first find out a way to stop the container that you have just launched.
+
+First up, launch another terminal (command window) and execute the following command
+```
+$ docker ps
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+a7a0e504ca3e        seqvence/static-site   "/bin/sh -c 'cd /usr/"   28 seconds ago      Up 26 seconds       80/tcp, 443/tcp     stupefied_mahavira
+```
+
+Check out the `CONTAINER ID` column. You will need to use this `CONTAINER ID` value, a long sequence of characters and first stop the running container and then remove the running container as given below. The example below provides the `CONTAINER ID` on our system, you should use the value that you see in your terminal. 
+```
+$ docker stop a7a0e504ca3e
+$ docker rm   a7a0e504ca3e
+```
+
+Note: A cool feature is that you need specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
+
+Now, let us launch a container in **detached** mode as shown below:
 
 ```
 $ docker run --name static-site -e AUTHOR=Your_Name -d -P seqvence/static-site
