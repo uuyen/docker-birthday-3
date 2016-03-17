@@ -47,8 +47,8 @@ This document contains a series of several sections, each of which explains a pa
 		- [3.2.3 Building and running the app](#buildvotingapp)
 		- [3.2.4 Build and tag images](#buildandtag)
 		- [3.2.5 Push images to Docker Hub](#pushimages)
-	- [3.3 Enter competition](#confirmtraining)
-	- [3.4 Check your submission status](#checkstatus)
+	-[3.3 Enter competition](#confirmtraining)
+	-[3.4 Check your submission status](#checkstatus)
 -  [4.0 Wrap Up](#wrap-up)
 -  [References](#references)
 
