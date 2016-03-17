@@ -178,7 +178,7 @@ $ docker run --name static-site -e AUTHOR=Your_Name -d -P seqvence/static-site
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
-In the above command, `-d` will detach our terminal, `-P` will publish all exposed ports to random ports and finally `--name` corresponds to a name you want to give. Now you can see the ports by running the `docker port` command
+In the above command, `-d` will detach our terminal, `-P` will publish all exposed ports to random ports and finally `--name` corresponds to a name you want to give, `-e` is how you pass environment variables at the time of running the container. `AUTHOR` is the environment variable name and `Your_Name` is the value that you can pass (ensure there are no spaces in the `Your_Name` value). Now you can see the ports by running the `docker port` command.  
 
 ```
 $ docker port static-site
@@ -195,7 +195,7 @@ $ docker-machine ip default
 You can now open [http://192.168.99.100:32772](http://192.168.99.100:32772) to see your site live! You can also specify a custom port to which the client will forward connections to the container.
 
 ```
-$ docker run --name static-site -e -e=Your_Name -d -p 8888:80 seqvence/static-site
+$ docker run --name static-site -e AUTHOR=Your_Name -d -p 8888:80 seqvence/static-site
 ```
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/static.png" title="static">
 
