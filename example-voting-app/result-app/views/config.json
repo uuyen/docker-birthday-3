@@ -1,7 +1,7 @@
 {
-  "name":"Mano Marks",
-  "twitter":"@manomarks",
+  "name":"Gordon",
+  "twitter":"@docker",
   "location":"San Francisco, CA, USA",
-  "repo":["manomarks/examplevotingapp_voting-app","manomarks/examplevotingapp_result-app"],
-  "vote":"Javascript"
+  "repo":["example/examplevotingapp_voting-app","example/examplevotingapp_result-app"],
+  "vote":"Cat"
 }

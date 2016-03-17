@@ -47,6 +47,7 @@ This document contains a series of several sections, each of which explains a pa
 		- [3.2.3 Building and running the app](#buildvotingapp)
 		- [3.2.4 Build and tag images](#buildandtag)
 		- [3.2.5 Push images to Docker Hub](#pushimages)
+    - [3.2.6 Running your app](#finalbuild)
 -	 [3.3 Enter competition](#confirmtraining)
 		- [3.3.1 Using the a web page published from container](#usingbutton)
   	- [3.3.2 Using curl](#usingcurl)
@@ -486,7 +487,18 @@ $ docker rm YOUR_USERNAME/myfirstapp
 ```
 
 <a id="dockercompetition"></a>
-## 3.0 Docker birthday training
+## 3.0 Docker Birthday Training
+This portion of the tutorial will guide you through the creation and customization of a voting app. It's important that you follow the steps in order, and make sure to customize the portions that are customizable.
+
+**Important.**
+To complete the submission, you will need to have Docker and Docker Compose installed on your machine as you did in the [Prerequisites](#prerequisites) and [Setup](#setup) sections. And you'll need to have a [Docker Id](https://hub.docker.com/register/). Once you do run login from the commandline:
+
+```
+$ docker login
+```
+
+And follow the login directions. That way you can push images to Docker Hub.
+
 
 <a id="pullimage"></a>
 ### 3.1 Pull voting-app
@@ -545,10 +557,10 @@ Replace it with your data:
 ```
 {
   "name":"John Doe",
-  "twitter":"@djohnd",
+  "twitter":"@dYOUR_DOCKER_ID",
   "location":"San Francisco, CA, USA",
-  "repo":["johnd/votingapp_voting-app", \
-  			"johnd/votingapp_result-app"],
+  "repo":["YOUR_DOCKER_ID/votingapp_voting-app", \
+  			"YOUR_DOCKER_ID/votingapp_result-app"],
   "vote":"Python"
 }
 ```
@@ -580,72 +592,143 @@ You are all set then. Navigate to each of the directories where you have a Docke
 In order to build the images, make sure to replace your *Docker Hub username* and *Docker image name* in the following commands:
 
 ```
-$ docker build --no-cache -t johnd/votingapp_voting-app .
+$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_voting-app .
 ...
-$ docker build --no-cache -t johnd/votingapp_result-app .
+$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_result-app .
 ...
 ```
 
 <a id="pushimages"></a>
 #### 3.2.5 Push images to Docker Hub
 
-Quickly, push the images to Docker hub using:
+Push the images to Docker hub. Remember, you must have run `docker login` before you can push.
 
 ```
-$ docker push johnd/votingapp_voting-app
+$ docker push YOUR_DOCKER_ID/votingapp_voting-app
 ...
-$ docker push johnd/votingapp_result-app
+$ docker push YOUR_DOCKER_ID/votingapp_result-app
 ...
 ```
+<a id="finalbuild"></a>
+#### 3.2.6 Running your app
+Finally, run your application. To do that, you're going to use [Docker Compose](https://docs.docker.com/compose). Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you define a simple .yml file that describes all the containers and volumes that you want, and the networks between them. If you navigate to the example-voting-app directory, you'll see a `docker-compose.yml file`:
+
+```
+version: "2"
+
+services:
+  voting-app:
+    build: ./voting-app/.
+    volumes:
+     - ./voting-app:/app
+    ports:
+      - "5000:80"
+    links:
+      - redis
+    networks:
+      - front-tier
+      - back-tier
+
+  result-app:
+    build: ./result-app/.
+    volumes:
+      - ./result-app:/app
+    ports:
+      - "5001:80"
+    links:
+      - db
+    networks:
+      - front-tier
+      - back-tier
+
+  worker:
+    build: ./worker
+    links:
+      - db
+      - redis
+    networks:
+      - back-tier
+
+  redis:
+    image: redis:alpine
+    ports: ["6379"]
+    networks:
+      - back-tier
+
+  db:
+    image: postgres:9.4
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
+```
+
+This Compose file defines
+
+- A voting-app container based on a Python image
+- A result-app container based on a Node.js image
+- A redis container based on a redis image, to temporarily store the data.
+- A Java based worker app based on a Java image
+- A Postgres container based on a postgres image
+
+Note that three of the containers are build from Dockerfiles, while two are defined directly by the Compose file. To learn more about how they're build, you can examine each of the Dockerfiles in the three directories: voting-app, result-app, worker.
+
+The Compose file also defines two networks, front-tier and back-tier. each container is placed on one or two networks. Once on those networks, they can access other services on that network in code just by using the name of the service. To learn more about networking check out the [Networking with Compose documentation](https://docs.docker.com/compose/networking/).
+
+To launch your app navigate to the example-voting-app directory and run the following command:
+
+```
+$ docker-compose up -d
+```
+This tells Compose to run the `docker-compose.yml` file in that directory. The `-d` tells it to run them in daemon mode, in the background.
+
+Last you'll need to figure out the ip address of your containers. If you're running Linux, it's just localhost, or 0.0.0.0. If you're using Docker Machine on Mac or Windows, you'll need to run:
+
+```
+$ docker-machine ip default
+```
+It'll return an IP address. If you only have one Docker Machine running, most likely, that's 192.168.99.100. We'll call that YOUR_IP_ADDRESS. Navigate to YOUR_IP_ADDRESS:5000 in your browser, and you'll see the voting app, something like this:
+
+<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/vote.png" title="vote">
+
+Click on one to vote. You can check the results at YOUR_IP_ADDRESS:5001.
 
 <a id="confirmtraining"></a>
 ### 3.3 Confirm your completion
 
-There are two ways to submit your entry in the competition:
-
-<a id="usingbutton"></a>
-#### 3.3.1 Using the a web page published from examplevotingapp_result-app container
-
-Double check once again the content of ```config.json file``` to make sure all the information is correct and start all containers from example voting app image **examplevotingapp_result-app**.
-
-
-```
-$ cd example-voting-app
-$ docker-compose up -d
-```  
+Once you're completed steps 3.1 through 3.2.6 you can submit your application. It's very easy to do so. Navigate to your results app in the browser.
 
 Get the *ID* of the running container running from image *examplevotingapp_result-app*:
 
 ```
 $ docker ps -a | grep votingapp_result-app
-5d92bc17124e        examplevotingapp_result-app   "node server.js"    3 minutes ago       Up 3 minutes        192.168.64.2:5001->80/tcp   compassionate_golick
+SOME_ID        examplevotingapp_result-app   "node server.js"    3 minutes ago       Up 3 minutes        192.168.64.2:5001->80/tcp   compassionate_golick
 ```
 
-Access the log files for the container **5d92bc17124e** using the following command:
+Access the log files for the container **SOME_ID** using the following command:
 
 ```
-$ docker logs -f 5d92bc17124e
+$ docker logs -f SOME_ID
 Thu, 10 Mar 2016 21:48:15 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:77:9
 Thu, 10 Mar 2016 21:48:16 GMT body-parser deprecated undefined extended: provide extended option at node_modules/body-parser/index.js:105:29
 App running on port 80
 Connected to db
 ```
 
-Obtain the ip address of your docker machine
-
-```
-$ docker-machine ip default
-192.168.64.2
-```
-
-Open a browser and access [http://192.168.64.2:5001/birthday.html](http://192.168.64.2:5001/birthday.html)
+Open a browser and access YOUR_IP_ADDRESS:5001/birthday.html.
 
 The page displayed will look like the one below:
 
-
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/submit_work.png" title="static">
 
-Button message is more than intuitive so go ahead and press it.
+Press the button.
 
 Soon as you did you need to return to your docker container where you are watching the log files and the output should look like:
 
@@ -654,35 +737,13 @@ Thu, 10 Mar 2016 21:48:15 GMT body-parser deprecated bodyParser: use individual 
 Thu, 10 Mar 2016 21:48:16 GMT body-parser deprecated undefined extended: provide extended option at node_modules/body-parser/index.js:105:29
 App running on port 80
 Connected to db
-http://dockerize.it/competition/56e0d42b9be64d0016050302
+http://dockerize.it/competition/YOUR_SUBMISSION_ID
 ```
-
-<a id="usingcurl"></a>
-#### 3.3.2 Using ```curl```
-
-
-Another way of submitting work in the competition is by making use of ```curl``` command and you need to run an API call as described below:
-
-```
-$ curl -H "Content-type: application/json" \
-	-X POST -d @config.json \
-	http://dockerize.it/competition
-
-{"response": "http://dockerize.it/competition/56df6ea39be64d001328870e"}
-```
-The API will return a link where you can check the status of your submission.
-
-<a id="checkstatus"></a>
-### 3.4 Check your submission status
-
-You can check your submission by accessing the link returned when you submitted your work:
-
-	http://dockerize.it/competition/56e0d42b9be64d0016050302
-
+You can navigate to http://dockerize.it/competition/YOUR_SUBMISSION_ID to check the status of your submission.
 
 <a id="wrap-up"></a>
 ## 4.0 Wrap Up
-And that's a wrap! After a long, exhaustive but fun tutorial you are now ready to take the container world by storm! If you followed along till the very end then you should definitely be proud of yourself. You learned how to setup docker, run your own containers, and use Docker Compose to create a multi-container application.
+And that's a wrap! You are now ready to take the container world by storm! If you followed along till the very end then you should definitely be proud of yourself. You learned how to setup docker, run your own containers, and use Docker Compose to create a multi-container application.
 
 <a id="next-steps"></a>
 ### 4.1 Next Steps
