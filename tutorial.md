@@ -279,7 +279,9 @@ Then there are two more types of images that can be both base and child images, 
 <a id="our-image"></a>
 ### 2.3 Our First Image
 
-Now that you have a better understanding of images, it's time to create our own. Our goal in this section will be to create an image that sandboxes a simple [Flask](http://flask.pocoo.org) application. For the purposes of this workshop, I've already created a fun, little [Flask app](https://github.com/docker/Docker-Birthday-3/flask-app) that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats? If you haven't already, please go ahead and clone the repository locally.
+Now that you have a better understanding of images, it's time to create our own. Our goal in this section will be to create an image that sandboxes a simple [Flask](http://flask.pocoo.org) application. For the purposes of this workshop, I've already created a fun, little [Flask app](https://github.com/docker/Docker-Birthday-3/tree/master/flask-app) that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats? If you haven't already, please go ahead and clone the repository locally.
+
+	git clone https://github.com/docker/docker-birthday-3.git
 
 <a id="dockerfiles"></a>
 ### 2.4 Dockerfile
