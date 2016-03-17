@@ -187,7 +187,7 @@ $ docker stop a7a0e504ca3e
 $ docker rm   a7a0e504ca3e
 ```
 
-Note: A cool feature is that you need specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
+Note: A cool feature is that you do not need to specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
 
 Now, let us launch a container in **detached** mode as shown below:
 
