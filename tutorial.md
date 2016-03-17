@@ -174,7 +174,7 @@ Since the image doesn't exist locally, the client will first fetch the image fro
 Well in this case, the client is not exposing any ports so you need to re-run the `docker run` command to publish ports and pass your name to the container to customize the message displayed. While were at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
 
 ```
-$ docker run --name static-site -e AUTHOR=Your_Name -d -P seqvence/static-site
+$ docker run --name static-site -e AUTHOR="Your Name" -d -P seqvence/static-site
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
@@ -195,17 +195,17 @@ $ docker-machine ip default
 You can now open [http://192.168.99.100:32772](http://192.168.99.100:32772) to see your site live! You can also specify a custom port to which the client will forward connections to the container.
 
 ```
-$ docker run --name static-site -e -e=Your_Name -d -p 8888:80 seqvence/static-site
+$ docker run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 seqvence/static-site
 ```
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/static.png" title="static">
 
 I'm sure you agree that was super simple. To deploy this on a real server you would just need to install docker, and run the above docker command.
 
-Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section. But first, let's stop and remove the container since you won't be using it anymore.
+Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section. But first, let's stop and remove the containers since you won't be using them anymore.
 
 ```
-$ docker stop static-site
-$ docker rm static-site
+$ docker stop static-site static-site-2
+$ docker rm static-site static-site-2
 ```
 
 <a id="docker-images"></a>
@@ -728,7 +728,7 @@ The page displayed will look like the one below:
 
 Press the button.
 
-Soon as you did you need to return to your docker container where you are watching the log files and the output should look like:
+As soon as you did, you need to return to your docker container where you are watching the log files and the output should look like:
 
 ```
 Thu, 10 Mar 2016 21:48:15 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:77:9
