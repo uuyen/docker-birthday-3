@@ -47,7 +47,6 @@ This document contains a series of several sections, each of which explains a pa
 		- [3.2.3 Building and running the app](#buildvotingapp)
 		- [3.2.4 Build and tag images](#buildandtag)
 		- [3.2.5 Push images to Docker Hub](#pushimages)
-		- [3.2.6 Running your app](#finalbuild)
 	- [3.3 Enter competition](#confirmtraining)
 	- [3.4 Check your submission status](#checkstatus)
 -  [4.0 Wrap Up](#wrap-up)
@@ -590,53 +589,8 @@ Replace it with your data:
 }
 ```
 <a id="buildvotingapp"></a>
-### 3.2.3 Building and running the app
-
-Navigate to the directory docker-birthday-3/example-voting-app and run start docker compose using docker-compose.yml.
-
-```
-$ docker-compose up -d
-```
-
-Once all containers are up you can check their status:
-
-```
-$ docker ps -a
-CONTAINER ID        IMAGE                         COMMAND                  CREATED              STATUS              PORTS                     NAMES
-f854dff5ce6d        examplevotingapp_result-app   "node server.js"         About a minute ago   Up About a minute   0.0.0.0:5001->80/tcp      examplevotingapp_result-app_1
-4ff9f295f383        examplevotingapp_voting-app   "python app.py"          2 minutes ago        Up 2 minutes        0.0.0.0:5000->80/tcp      examplevotingapp_voting-app_1
-fd1bf9d1b8c0        examplevotingapp_worker       "/usr/lib/jvm/java-7-"   3 minutes ago        Up 3 minutes                                  examplevotingapp_worker_1
-32cd0d514f10        redis                         "/entrypoint.sh redis"   6 minutes ago        Up 6 minutes        0.0.0.0:32771->6379/tcp   examplevotingapp_redis_1
-be5b0b21ab07        postgres:9.4                  "/docker-entrypoint.s"   6 minutes ago        Up 6 minutes        5432/tcp                  examplevotingapp_db_1
-```
-<a id="buildandtag"></a>
-#### 3.2.4 Build and tag images
-
-You are all set then. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
-
-In order to build the images, make sure to replace your *Docker Hub username* and *Docker image name* in the following commands:
-
-```
-$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_voting-app .
-...
-$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_result-app .
-...
-```
-
-<a id="pushimages"></a>
-#### 3.2.5 Push images to Docker Hub
-
-Push the images to Docker hub. Remember, you must have run `docker login` before you can push.
-
-```
-$ docker push YOUR_DOCKER_ID/votingapp_voting-app
-...
-$ docker push YOUR_DOCKER_ID/votingapp_result-app
-...
-```
-<a id="finalbuild"></a>
-#### 3.2.6 Running your app
-Finally, run your application. To do that, you're going to use [Docker Compose](https://docs.docker.com/compose). Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you define a simple .yml file that describes all the containers and volumes that you want, and the networks between them. If you navigate to the example-voting-app directory, you'll see a `docker-compose.yml file`:
+#### 3.2.3 Running your app
+Now, run your application. To do that, you're going to use [Docker Compose](https://docs.docker.com/compose). Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you define a simple .yml file that describes all the containers and volumes that you want, and the networks between them. If you navigate to the example-voting-app directory, you'll see a `docker-compose.yml file`:
 
 ```
 version: "2"
@@ -724,6 +678,32 @@ It'll return an IP address. If you only have one Docker Machine running, most li
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/vote.png" title="vote">
 
 Click on one to vote. You can check the results at YOUR_IP_ADDRESS:5001.
+
+<a id="buildandtag"></a>
+#### 3.2.4 Build and tag images
+
+You are all set then. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
+
+In order to build the images, make sure to replace your *Docker Hub username* and *Docker image name* in the following commands:
+
+```
+$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_voting-app .
+...
+$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_result-app .
+...
+```
+
+<a id="pushimages"></a>
+#### 3.2.5 Push images to Docker Hub
+
+Push the images to Docker hub. Remember, you must have run `docker login` before you can push.
+
+```
+$ docker push YOUR_DOCKER_ID/votingapp_voting-app
+...
+$ docker push YOUR_DOCKER_ID/votingapp_result-app
+...
+```
 
 <a id="confirmtraining"></a>
 ### 3.3 Confirm your completion
