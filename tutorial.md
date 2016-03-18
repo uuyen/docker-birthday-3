@@ -108,10 +108,17 @@ hello-world             latest              690ed74de00f        5 months ago    
 Great! Let's now run a Docker **container** based on this image. To do that you are going to use the `docker run` command.
 
 ```
-$ docker run alpine
-$
+$ docker run alpine ls -l
+total 48
+drwxr-xr-x    2 root     root          4096 Mar  2 16:20 bin
+drwxr-xr-x    5 root     root           360 Mar 18 09:47 dev
+drwxr-xr-x   13 root     root          4096 Mar 18 09:47 etc
+drwxr-xr-x    2 root     root          4096 Mar  2 16:20 home
+drwxr-xr-x    5 root     root          4096 Mar  2 16:20 lib
+......
+......
 ```
-Wait, nothing happened! Is that a bug? Well, no. Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker run alpine`, you didn't provide a command, so Docker started the default command specified in the image, in this case, `/bin/sh`. Interactive Shells like `sh` will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker run -it alpine`.
+What happened? Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker run alpine`, you provided a command (`ls -l`), so Docker started the command specified and you saw the listing. 
 
 Let's try something more exciting.
 
@@ -127,6 +134,16 @@ $ docker run alpine uptime
 00:16:48 up  1:48,  0 users,  load average: 0.00, 0.01, 0.04
 ```
 
+Try another command.
+```
+$ docker run alpine /bin/sh
+```
+
+Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker run -it alpine /bin/sh`.
+
+You are now inside the container shell and you can try out a few commands like `ls -l`, `uptime` and others. Exit out of the container by giving the `exit` command. 
+
+
 Ok, now it's time to see the `docker ps` command. The `docker ps` command shows you all containers that are currently running.
 
 ```
@@ -139,18 +156,19 @@ Since no containers are running, you see a blank line. Let's try a more useful v
 ```
 $ docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
-305297d7a235        alpine             "uptime"                 5 minutes ago       Exited (0) 4 minutes ago                        distracted_goldstine
-a6a9d46d0b2f        alpine             "echo 'hello from bus"   6 minutes ago       Exited (0) 6 minutes ago                        lonely_kilby
-ff0a5c3750b9        alpine             "sh"                     8 minutes ago       Exited (0) 8 minutes ago                        elated_ramanujan
+36171a5da744        alpine              "/bin/sh"                5 minutes ago       Exited (0) 2 minutes ago                        fervent_newton
+305297d7a235        alpine             "uptime"                  5 minutes ago       Exited (0) 4 minutes ago                        distracted_goldstine
+a6a9d46d0b2f        alpine             "echo 'hello from alp"    6 minutes ago       Exited (0) 6 minutes ago                        lonely_kilby
+ff0a5c3750b9        alpine             "ls -l"                   8 minutes ago       Exited (0) 8 minutes ago                        elated_ramanujan
 c317d0a9e3d2        hello-world         "/hello"                 34 seconds ago      Exited (0) 12 minutes ago                       stupefied_mcclintock
 ```
 
 What you see above is a list of all containers that you ran. Notice that the `STATUS` column shows that these containers exited a few minutes ago. You're probably wondering if there is a way to run more than just one command in a container. Let's try that now:
 
 ```
-$ docker run -it alpine
+$ docker run -it alpine /bin/sh
 / # ls
-bin   dev   etc   home  proc  root  sys   tmp   usr   var
+bin      dev      etc      home     lib      linuxrc  media    mnt      proc     root     run      sbin     sys      tmp      usr      var
 / # uptime
  05:45:21 up  5:58,  0 users,  load average: 0.00, 0.01, 0.04
 ```
