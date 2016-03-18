@@ -215,7 +215,7 @@ e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 
 In the above command, `-d` will create a container with the process detached from our terminal, `-P` will publish all the exposed container ports to random ports on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you tp specify a container name. `AUTHOR` is the environment variable name and `Your_Name` is the value that you can pass (ensure there are no spaces in the `Your_Name` value).
 
-Now you can see the ports by running the `docker port` command.  
+Now you can see the ports by running the `docker port` command.
 
 ```
 $ docker port static-site
@@ -398,7 +398,7 @@ Create `directory` templates and create a **index.html** file in that directory,
 </html>
 ```
 
-The next step now is to create a Docker image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). We'll do that using a **Dockerfile**.
+The next step now is to create a Docker image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, we will build our own Python image based on [Alpine](https://hub.docker.com/_/alpine/). We'll do that using a **Dockerfile**.
 
 Open Dockerfile. Now start by specifying our base image. Use the `FROM` keyword to do that
 
