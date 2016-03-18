@@ -74,8 +74,8 @@ Once you are done installing Docker, test your Docker installation by running th
 $ docker run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
-03f4658f8b78: Pull complete 
-a3ed95caeb02: Pull complete 
+03f4658f8b78: Pull complete
+a3ed95caeb02: Pull complete
 Digest: sha256:8be990ef2aeb16dbcb9271ddfe2610fa6658d13f6dfb8bc72074cc1ca36966a7
 Status: Downloaded newer image for hello-world:latest
 
@@ -111,19 +111,19 @@ Great! Let's now run a Docker **container** based on this image. To do that you 
 $ docker run alpine
 $
 ```
-Wait, nothing happened! Is that a bug? Well, no. Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (busybox in this case), creates the container and then runs a command in that container. When you run `docker run busybox`, you didn't provide a command, so Docker started the default command specified in the image, in this case, `/bin/sh`. Interactive Shells like `sh` will exit after running any scripted commands, unless they are run in an interactive terminal - so for this exmaple to not exit, you need to `docker run -it busybox`.
+Wait, nothing happened! Is that a bug? Well, no. Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker run alpine`, you didn't provide a command, so Docker started the default command specified in the image, in this case, `/bin/sh`. Interactive Shells like `sh` will exit after running any scripted commands, unless they are run in an interactive terminal - so for this exmaple to not exit, you need to `docker run -it alpine`.
 
 Let's try something more exciting.
 
 ```
-$ docker run busybox echo "hello from busybox"
-hello from busybox
+$ docker run alpine echo "hello from alpine"
+hello from alpine
 ```
-OK, that's some actual output. In this case, the Docker client dutifully ran the `echo` command in our busybox container and then exited it. If you've noticed, all of that happened pretty quickly. Imagine booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast! 
+OK, that's some actual output. In this case, the Docker client dutifully ran the `echo` command in our alpine container and then exited it. If you've noticed, all of that happened pretty quickly. Imagine booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
 
 Try another command.
 ```
-$ docker run busybox uptime
+$ docker run alpine uptime
 00:16:48 up  1:48,  0 users,  load average: 0.00, 0.01, 0.04
 ```
 
@@ -139,16 +139,16 @@ Since no containers are running, you see a blank line. Let's try a more useful v
 ```
 $ docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
-305297d7a235        busybox             "uptime"                 5 minutes ago       Exited (0) 4 minutes ago                        distracted_goldstine
-a6a9d46d0b2f        busybox             "echo 'hello from bus"   6 minutes ago       Exited (0) 6 minutes ago                        lonely_kilby
-ff0a5c3750b9        busybox             "sh"                     8 minutes ago       Exited (0) 8 minutes ago                        elated_ramanujan
+305297d7a235        alpine             "uptime"                 5 minutes ago       Exited (0) 4 minutes ago                        distracted_goldstine
+a6a9d46d0b2f        alpine             "echo 'hello from bus"   6 minutes ago       Exited (0) 6 minutes ago                        lonely_kilby
+ff0a5c3750b9        alpine             "sh"                     8 minutes ago       Exited (0) 8 minutes ago                        elated_ramanujan
 c317d0a9e3d2        hello-world         "/hello"                 34 seconds ago      Exited (0) 12 minutes ago                       stupefied_mcclintock
 ```
 
 What you see above is a list of all containers that you ran. Notice that the `STATUS` column shows that these containers exited a few minutes ago. You're probably wondering if there is a way to run more than just one command in a container. Let's try that now:
 
 ```
-$ docker run -it busybox
+$ docker run -it alpine
 / # ls
 bin   dev   etc   home  proc  root  sys   tmp   usr   var
 / # uptime
@@ -156,7 +156,7 @@ bin   dev   etc   home  proc  root  sys   tmp   usr   var
 ```
 Running the `run` command with the `-it` flags attaches us to an interactive tty in the container. Now you can run as many commands in the container as you want. Take some time to run your favorite commands.
 
-> **Danger Zone**: If you're feeling particularly adventurous you can try `rm -rf /bin` in the container. Make sure you run this command in the container and **not** in your laptop. Doing this will not make any other commands like `ls` and `grep` work. Once everything stops working, you can exit the container and then start it up again with the `docker run -it busybox sh` command. Since Docker creates a new container every time, everything should start working again.
+> **Danger Zone**: If you're feeling particularly adventurous you can try `rm -rf /bin` in the container. Make sure you run this command in the container and **not** in your laptop. Doing this will not make any other commands like `ls` and `grep` work. Once everything stops working, you can exit the container and then start it up again with the `docker run -it alpine sh` command. Since Docker creates a new container every time, everything should start working again.
 
 That concludes a whirlwind tour of the `docker run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker run`.
 
@@ -164,8 +164,8 @@ That concludes a whirlwind tour of the `docker run` command which would most lik
 ### 1.2 Terminology
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
 
-- *Images* - The Filesystem and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker inspect busybox`. In the demo above, you used the `docker pull` command to download the **busybox** image. When you executed the command `docker run hello-world`, it also did a `docker pull` behind the scenes to download the **hello-world** image.
-- *Containers* - Created using Docker images and run the actual application. You created a container using `docker run` which you did using the busybox image that you downloaded. A list of running containers can be seen using the `docker ps` command.
+- *Images* - The Filesystem and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker inspect alpine`. In the demo above, you used the `docker pull` command to download the **alpine** image. When you executed the command `docker run hello-world`, it also did a `docker pull` behind the scenes to download the **hello-world** image.
+- *Containers* - Created using Docker images and run the actual application. You created a container using `docker run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker ps` command.
 - *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
 - *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
 - *Docker Hub* - A [registry](https://hub.docker.com/explore/) of Docker images. You can think of the registry as a directory of all available Docker images. You'll be using this later in this tutorial.
@@ -213,7 +213,7 @@ $ docker run --name static-site -e AUTHOR="Your_Name" -d -P seqvence/static-site
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
-In the above command, `-d` will create a container with the process detached from our terminal, `-P` will publish all the exposed container ports to random ports on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you tp specify a container name. `AUTHOR` is the environment variable name and `Your_Name` is the value that you can pass (ensure there are no spaces in the `Your_Name` value). 
+In the above command, `-d` will create a container with the process detached from our terminal, `-P` will publish all the exposed container ports to random ports on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you tp specify a container name. `AUTHOR` is the environment variable name and `Your_Name` is the value that you can pass (ensure there are no spaces in the `Your_Name` value).
 
 Now you can see the ports by running the `docker port` command.  
 
@@ -271,7 +271,7 @@ java                   7                   21f6ce84e43c        8 days ago       
 
 The above gives a list of images that I've pulled from the registry and the ones that I've created myself (we'll shortly see how). The list will most likely not correspond to the list of images that you have currently on your machine. The `TAG` refers to a particular snapshot of the image and the `ID` is the corresponding unique identifier for that image.
 
-For simplicity, you can think of an image akin to a git repository - images can be [committed](https://docs.docker.com/engine/reference/commandline/commit/) with changes and have multiple versions. When you do not provide a specific version number, the client defaults to `latest`. 
+For simplicity, you can think of an image akin to a git repository - images can be [committed](https://docs.docker.com/engine/reference/commandline/commit/) with changes and have multiple versions. When you do not provide a specific version number, the client defaults to `latest`.
 
 For example, you can pull a specific version of `ubuntu` image as follows:
 
@@ -281,7 +281,7 @@ $ docker pull ubuntu:12.04
 
 **NOTE**: Do not execute the above command. It is only for your reference.
 
-If you do not specify the version number of the image, then as mentioned the Docker client with default to a version named `latest`. 
+If you do not specify the version number of the image, then as mentioned the Docker client with default to a version named `latest`.
 
 So for example, the `docker pull` command given below will pull an image named `ubuntu:latest`:
 
@@ -293,7 +293,7 @@ To get a new Docker image you can either get it from a registry (such as the doc
 
 An important distinction to be aware of when it comes to images is between base and child images.
 
-- **Base images** are images that has no parent image, usually images with an OS like ubuntu, busybox or debian.
+- **Base images** are images that has no parent image, usually images with an OS like ubuntu, alpine or debian.
 
 - **Child images** are images that build on base images and add additional functionality.
 
@@ -307,7 +307,7 @@ Then there are two more types of images that can be both base and child images, 
 ### 2.3 Our First Image
 
 Now that you have a better understanding of images, it's time to create our own. Our goal in this section will be to create an image that sandboxes a small [Flask](http://flask.pocoo.org) application.
-For the purposes of this workshop, we'll created a fun little Python Flask app that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats? 
+For the purposes of this workshop, we'll created a fun little Python Flask app that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats?
 
 <a id="dockerfiles"></a>
 ### 2.4 Dockerfile
