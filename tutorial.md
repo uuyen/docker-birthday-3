@@ -426,7 +426,7 @@ Copy the files you have created earlier our image by using [COPY](https://docs.d
 
 ```
 COPY app.py /usr/src/app/
-COPY templates/index.html /usr/src/app/templates
+COPY templates/index.html /usr/src/app/templates/
 ```
 
 The next thing you need to specify is the port number which needs to be exposed. Since our flask app is running on `5000` that's what we'll expose.
