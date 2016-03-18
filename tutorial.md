@@ -717,7 +717,7 @@ $ docker-compose up -d
 ```
 This tells Compose to run the `docker-compose.yml` file in that directory. The `-d` tells it to run them in daemon mode, in the background.
 
-Last you'll need to figure out the ip address of your containers. If you're running Linux, it's just localhost, or 0.0.0.0. If you're using Docker Machine on Mac or Windows, you'll need to run:
+Last you'll need to figure out the ip address of your containers. If you're running Linux, it's just localhost, or 127.0.0.1. If you're using Docker Machine on Mac or Windows, you'll need to run:
 
 ```
 $ docker-machine ip default
