@@ -215,7 +215,7 @@ e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 
 In the above command, `-d` will create a container with the process detached from our terminal, `-P` will publish all the exposed container ports to random ports on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you tp specify a container name. `AUTHOR` is the environment variable name and `Your_Name` is the value that you can pass (ensure there are no spaces in the `Your_Name` value).
 
-Now you can see the ports by running the `docker port` command.  
+Now you can see the ports by running the `docker port` command.
 
 ```
 $ docker port static-site
@@ -426,7 +426,7 @@ Copy the files you have created earlier our image by using [COPY](https://docs.d
 
 ```
 COPY app.py /usr/src/app/
-COPY templates/index.html /usr/src/app/templates
+COPY templates/index.html /usr/src/app/templates/
 ```
 
 The next thing you need to specify is the port number which needs to be exposed. Since our flask app is running on `5000` that's what we'll expose.
