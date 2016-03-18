@@ -670,7 +670,7 @@ services:
       - back-tier
 
   worker:
-    build: ./worker
+    image: manomarks/worker
     links:
       - db
       - redis
