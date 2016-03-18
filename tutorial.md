@@ -325,8 +325,6 @@ Start by creating a folder ```flask-app``` where we'll create the following file
 - templates/index.html
 ```
 
-*The application directory does contain a Dockerfile but since we're doing this for the first time, we'll create one from scratch. To start, create a new blank file in our favorite text-editor and save it in the same folder as the flask app by the name of `Dockerfile`.*
-
 Create the **app.py** with the following content:
 
 ```
@@ -400,7 +398,8 @@ Create `directory` templates and create a **index.html** file in that directory,
 
 The next step now is to create a Docker image with this web app. As mentioned above, all user images are based off a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). We'll do that using a **Dockerfile**.
 
-Open Dockerfile. Now start by specifying our base image. Use the `FROM` keyword to do that
+Create a file **Dockerfile**.
+Start by specifying our base image. Use the `FROM` keyword to do that
 
 ```
 FROM alpine:latest
