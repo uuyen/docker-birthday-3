@@ -31,7 +31,7 @@ This document contains a series of several sections, each of which explains a pa
 -	[Preface](#preface)
     -	[Prerequisites](#prerequisites)
     -	[Setting up your computer](#setup)
--   [1.0 Playing with Busybox](#busybox)
+-   [1.0 Playing with Alpine](#alpine)
     -   [1.1 Docker Run](#dockerrun)
     -   [1.2 Terminology](#terminology)
 -   [2.0 Webapps with Docker](#webapps)
@@ -78,22 +78,22 @@ This message shows that your installation appears to be working correctly.
 ...
 ```
 <a href="#table-of-contents" class="top" id="preface">Top</a>
-<a id="busybox"></a>
-## 1.0 Playing with Busybox
-Now that you have everything setup, it's time to get our hands dirty. In this section, you are going to run a [Busybox](https://en.wikipedia.org/wiki/BusyBox) container (a lightweight linux distribution) on our system and get a taste of the `docker run` command.
+<a id="alpine"></a>
+## 1.0 Playing with Alpine
+Now that you have everything setup, it's time to get our hands dirty. In this section, you are going to run a [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on our system and get a taste of the `docker run` command.
 
 To get started, let's run the following in our terminal:
 ```
-$ docker pull busybox
+$ docker pull alpine
 ```
 
 > Note: Depending on how you've installed docker on your system, you might see a `permission denied` error after running the above command. If you're on a Mac, make sure the Docker engine is running. If you're on Linux, then prefix your `docker` commands with `sudo`. Alternatively you can [create a docker group](http://docs.docker.com/engine/installation/ubuntulinux/#create-a-docker-group) to get rid of this issue.
 
-The `pull` command fetches the busybox **image** from the **Docker registry** and saves it in our system. You can use the `docker images` command to see a list of all images on your system.
+The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in our system. You can use the `docker images` command to see a list of all images on your system.
 ```
 $ docker images
 REPOSITORY              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-busybox                 latest              c51f86c28340        4 weeks ago         1.109 MB
+alpine                 latest              c51f86c28340        4 weeks ago         1.109 MB
 hello-world             latest              690ed74de00f        5 months ago        960 B
 ```
 
@@ -102,7 +102,7 @@ hello-world             latest              690ed74de00f        5 months ago    
 Great! Let's now run a Docker **container** based on this image. To do that you are going to use the `docker run` command.
 
 ```
-$ docker run busybox
+$ docker run alpine
 $
 ```
 Wait, nothing happened! Is that a bug? Well, no. Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (busybox in this case), loads up the container and then runs a command in that container. When you run `docker run busybox`, you didn't provide a command, so the container booted up, ran an empty command and then exited. Let's try something more exciting.
