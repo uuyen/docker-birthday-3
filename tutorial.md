@@ -42,14 +42,13 @@ This document contains a series of several sections, each of which explains a pa
 -	 [3.0 Birthday training](#dockercompetition)
 	- [3.1 Pull voting-app images](#pullimage)
   - [3.2 Customize the App](#customize)
-		- [3.2.1 Modify app.py](#modifyapp)
+                - [3.2.1 Modify app.py](#modifyapp)
 		- [3.2.2 Modify config.json](#modifyconfig)
 		- [3.2.3 Building and running the app](#buildvotingapp)
 		- [3.2.4 Build and tag images](#buildandtag)
 		- [3.2.5 Push images to Docker Hub](#pushimages)
-		- [3.2.6 Running your app](#finalbuild)
--	 [3.3 Enter competition](#confirmtraining)
--	 [3.4 Check your submission status](#checkstatus)
+  - [3.3 Enter competition](#confirmtraining)
+  - [3.4 Check your submission status](#checkstatus)
 -  [4.0 Wrap Up](#wrap-up)
 -  [References](#references)
 
@@ -141,7 +140,7 @@ bin   dev   etc   home  proc  root  sys   tmp   usr   var
 ```
 Running the `run` command with the `-it` flags attaches us to an interactive tty in the container. Now you can run as many commands in the container as you want. Take some time to run your favorite commands.
 
-> **Danger Zone**: If you're feeling particularly adventurous you can try `rm -rf bin` in the container. Make sure you run this command in the container and **not** in your laptop. Doing this will not make any other commands like `ls`, `echo` work. Once everything stops working, you can exit the container and then start it up again with the `docker run -it busybox sh` command. Since Docker creates a new container every time, everything should start working again.
+> **Danger Zone**: If you're feeling particularly adventurous you can try `rm -rf bin` in the container. Make sure you run this command in the container and **not** in your laptop. Doing this will not make any other commands like `ls` and `grep` work. Once everything stops working, you can exit the container and then start it up again with the `docker run -it busybox sh` command. Since Docker creates a new container every time, everything should start working again.
 
 That concludes a whirlwind tour of the `docker run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker run`.
 
@@ -182,18 +181,18 @@ CONTAINER ID        IMAGE                  COMMAND                  CREATED     
 a7a0e504ca3e        seqvence/static-site   "/bin/sh -c 'cd /usr/"   28 seconds ago      Up 26 seconds       80/tcp, 443/tcp     stupefied_mahavira
 ```
 
-Check out the `CONTAINER ID` column. You will need to use this `CONTAINER ID` value, a long sequence of characters and first stop the running container and then remove the running container as given below. The example below provides the `CONTAINER ID` on our system, you should use the value that you see in your terminal. 
+Check out the `CONTAINER ID` column. You will need to use this `CONTAINER ID` value, a long sequence of characters and first stop the running container and then remove the running container as given below. The example below provides the `CONTAINER ID` on our system, you should use the value that you see in your terminal.
 ```
 $ docker stop a7a0e504ca3e
 $ docker rm   a7a0e504ca3e
 ```
 
-Note: A cool feature is that you need specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
+Note: A cool feature is that you do not need to specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
 
 Now, let us launch a container in **detached** mode as shown below:
 
 ```
-$ docker run --name static-site -e AUTHOR=Your_Name -d -P seqvence/static-site
+$ docker run --name static-site -e AUTHOR="Your Name" -d -P seqvence/static-site
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
@@ -214,17 +213,17 @@ $ docker-machine ip default
 You can now open [http://192.168.99.100:32772](http://192.168.99.100:32772) to see your site live! You can also specify a custom port to which the client will forward connections to the container.
 
 ```
-$ docker run --name static-site -e AUTHOR=Your_Name -d -p 8888:80 seqvence/static-site
+$ docker run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 seqvence/static-site
 ```
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/static.png" title="static">
 
 I'm sure you agree that was super simple. To deploy this on a real server you would just need to install docker, and run the above docker command.
 
-Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section. But first, let's stop and remove the container since you won't be using it anymore.
+Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section. But first, let's stop and remove the containers since you won't be using them anymore.
 
 ```
-$ docker stop static-site
-$ docker rm static-site
+$ docker stop static-site static-site-2
+$ docker rm static-site static-site-2
 ```
 
 <a id="docker-images"></a>
@@ -280,7 +279,9 @@ Then there are two more types of images that can be both base and child images, 
 <a id="our-image"></a>
 ### 2.3 Our First Image
 
-Now that you have a better understanding of images, it's time to create our own. Our goal in this section will be to create an image that sandboxes a simple [Flask](http://flask.pocoo.org) application. For the purposes of this workshop, I've already created a fun, little [Flask app](https://github.com/docker/Docker-Birthday-3/flask-app) that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats? If you haven't already, please go ahead and clone the repository locally.
+Now that you have a better understanding of images, it's time to create our own. Our goal in this section will be to create an image that sandboxes a simple [Flask](http://flask.pocoo.org) application. For the purposes of this workshop, I've already created a fun, little [Flask app](https://github.com/docker/Docker-Birthday-3/tree/master/flask-app) that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats? If you haven't already, please go ahead and clone the repository locally.
+
+	git clone https://github.com/docker/docker-birthday-3.git
 
 <a id="dockerfiles"></a>
 ### 2.4 Dockerfile
@@ -379,7 +380,7 @@ Open Dockerfile. Now start by specifying our base image. Use the `FROM` keyword 
 FROM alpine:latest
 ```
 
-The next step usually is to write the commands of copying the files and installing the dependencies. 
+The next step usually is to write the commands of copying the files and installing the dependencies.
 But first we will install the Python pip package to the alpine linux distribution. This will not just install the pip package but any other dependencies too, which includes the python interpreter. Add the following command next:
 ```
 RUN apk add --update py-pip
@@ -492,7 +493,7 @@ If you don't have the `alpine:latest` image, the client will first pull the imag
 The last step in this section is to run the image and see if it actually works.
 
 ```
-$ docker run -p --name myfirstapp 8888:5000 YOUR_USERNAME/myfirstapp
+$ docker run -p 8888:5000 --name myfirstapp YOUR_USERNAME/myfirstapp
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ```
 
@@ -582,7 +583,7 @@ Replace it with your data:
 ```
 {
   "name":"John Doe",
-  "twitter":"@dYOUR_DOCKER_ID",
+  "twitter":"@YOUR_DOCKER_ID",
   "location":"San Francisco, CA, USA",
   "repo":["YOUR_DOCKER_ID/votingapp_voting-app", \
   			"YOUR_DOCKER_ID/votingapp_result-app"],
@@ -590,53 +591,8 @@ Replace it with your data:
 }
 ```
 <a id="buildvotingapp"></a>
-### 3.2.3 Building and running the app
-
-Navigate to newly created directory (docker-birthday-3/example-voting-app) and run start docker compose using docker-compose.yml.
-
-```
-$ docker-compose up -d
-```
-
-Once all containers are up you can check their status:
-
-```
-$ docker ps -a
-CONTAINER ID        IMAGE                         COMMAND                  CREATED              STATUS              PORTS                     NAMES
-f854dff5ce6d        examplevotingapp_result-app   "node server.js"         About a minute ago   Up About a minute   0.0.0.0:5001->80/tcp      examplevotingapp_result-app_1
-4ff9f295f383        examplevotingapp_voting-app   "python app.py"          2 minutes ago        Up 2 minutes        0.0.0.0:5000->80/tcp      examplevotingapp_voting-app_1
-fd1bf9d1b8c0        examplevotingapp_worker       "/usr/lib/jvm/java-7-"   3 minutes ago        Up 3 minutes                                  examplevotingapp_worker_1
-32cd0d514f10        redis                         "/entrypoint.sh redis"   6 minutes ago        Up 6 minutes        0.0.0.0:32771->6379/tcp   examplevotingapp_redis_1
-be5b0b21ab07        postgres:9.4                  "/docker-entrypoint.s"   6 minutes ago        Up 6 minutes        5432/tcp                  examplevotingapp_db_1
-```
-<a id="buildandtag"></a>
-#### 3.2.4 Build and tag images
-
-You are all set then. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
-
-In order to build the images, make sure to replace your *Docker Hub username* and *Docker image name* in the following commands:
-
-```
-$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_voting-app .
-...
-$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_result-app .
-...
-```
-
-<a id="pushimages"></a>
-#### 3.2.5 Push images to Docker Hub
-
-Push the images to Docker hub. Remember, you must have run `docker login` before you can push.
-
-```
-$ docker push YOUR_DOCKER_ID/votingapp_voting-app
-...
-$ docker push YOUR_DOCKER_ID/votingapp_result-app
-...
-```
-<a id="finalbuild"></a>
-#### 3.2.6 Running your app
-Finally, run your application. To do that, you're going to use [Docker Compose](https://docs.docker.com/compose). Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you define a simple .yml file that describes all the containers and volumes that you want, and the networks between them. If you navigate to the example-voting-app directory, you'll see a `docker-compose.yml file`:
+#### 3.2.3 Running your app
+Now, run your application. To do that, you're going to use [Docker Compose](https://docs.docker.com/compose). Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you define a simple .yml file that describes all the containers and volumes that you want, and the networks between them. If you navigate to the example-voting-app directory, you'll see a `docker-compose.yml file`:
 
 ```
 version: "2"
@@ -725,6 +681,32 @@ It'll return an IP address. If you only have one Docker Machine running, most li
 
 Click on one to vote. You can check the results at YOUR_IP_ADDRESS:5001.
 
+<a id="buildandtag"></a>
+#### 3.2.4 Build and tag images
+
+You are all set then. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
+
+In order to build the images, make sure to replace your *Docker Hub username* and *Docker image name* in the following commands:
+
+```
+$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_voting-app .
+...
+$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_result-app .
+...
+```
+
+<a id="pushimages"></a>
+#### 3.2.5 Push images to Docker Hub
+
+Push the images to Docker hub. Remember, you must have run `docker login` before you can push.
+
+```
+$ docker push YOUR_DOCKER_ID/votingapp_voting-app
+...
+$ docker push YOUR_DOCKER_ID/votingapp_result-app
+...
+```
+
 <a id="confirmtraining"></a>
 ### 3.3 Confirm your completion
 
@@ -755,20 +737,22 @@ The page displayed will look like the one below:
 
 Press the button.
 
-As soon as you did, you need to return to your docker container where you are watching the log files and the output should look like:
+As soon as you did, return to your docker container where you are watching the log files and the output should look like:
 
 ```
 Thu, 10 Mar 2016 21:48:15 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:77:9
 Thu, 10 Mar 2016 21:48:16 GMT body-parser deprecated undefined extended: provide extended option at node_modules/body-parser/index.js:105:29
 App running on port 80
 Connected to db
-http://dockerize.it/competition/YOUR_SUBMISSION_ID
+YOUR_SUBMISSION_ID
 ```
-You can navigate to http://dockerize.it/competition/YOUR_SUBMISSION_ID to check the status of your submission.
+In order to check the status of your submission, copy your submission ID above and go to [dockerize.it](http://dockerize.it/). Paste the submission ID in the submission box above the map. It will take a few minutes for the submission status to go from "pending' to "accepted" and for your pin to appear on the map!
 
 <a id="wrap-up"></a>
 ## 4.0 Wrap Up
-And that's a wrap! You are now ready to take the container world by storm! If you followed along till the very end then you should definitely be proud of yourself. You learned how to setup docker, run your own containers, and use Docker Compose to create a multi-container application.
+And that's a wrap! You are now ready to take the container world by storm! If you followed along till the very end then you should definitely be proud of yourself. You learned how to setup docker, run your own containers, use Docker Machine to create a Docker host and use Docker Compose to create a multi-container application.
+
+Invite your friends to complete this [Docker Birthday Training] (https://github.com/docker/docker-birthday-3/)
 
 <a id="next-steps"></a>
 ### 4.1 Next Steps
