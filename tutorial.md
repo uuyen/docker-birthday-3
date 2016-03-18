@@ -111,7 +111,7 @@ Great! Let's now run a Docker **container** based on this image. To do that you 
 $ docker run alpine
 $
 ```
-Wait, nothing happened! Is that a bug? Well, no. Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker run alpine`, you didn't provide a command, so Docker started the default command specified in the image, in this case, `/bin/sh`. Interactive Shells like `sh` will exit after running any scripted commands, unless they are run in an interactive terminal - so for this exmaple to not exit, you need to `docker run -it alpine`.
+Wait, nothing happened! Is that a bug? Well, no. Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker run alpine`, you didn't provide a command, so Docker started the default command specified in the image, in this case, `/bin/sh`. Interactive Shells like `sh` will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker run -it alpine`.
 
 Let's try something more exciting.
 
