@@ -723,7 +723,7 @@ This Compose file defines
 - A Java based worker app based on a Java image
 - A Postgres container based on a postgres image
 
-Note that two of the containers are build from Dockerfiles, while the other three are images on Docker Hub. To learn more about how they're built, you can examine each of the Dockerfiles in the two directories: `voting-app`, `result-app`. We included the code for the Java worker in `worker` but pre-built the image to save on downloads.
+Note that two of the containers are built from Dockerfiles, while the other three are images on Docker Hub. To learn more about how they're built, you can examine each of the Dockerfiles in the two directories: `voting-app`, `result-app`. We included the code for the Java worker in `worker` but pre-built the image to save on downloads.
 
 The Compose file also defines two networks, front-tier and back-tier. Each container is placed on one or two networks. Once on those networks, they can access other services on that network in code just by using the name of the service. To learn more about networking check out the [Networking with Compose documentation](https://docs.docker.com/compose/networking/).
 
@@ -732,30 +732,32 @@ To launch your app navigate to the example-voting-app directory and run the foll
 ```
 $ docker-compose up -d
 ```
-This tells Compose to run the `docker-compose.yml` file in that directory. The `-d` tells it to run them in daemon mode, in the background.
 
-Last you'll need to figure out the ip address of your containers. If you're running Linux, it's just localhost, or 127.0.0.1. If you're using Docker Machine on Mac or Windows, you'll need to run:
+This tells Compose to start all the containers specified in the `docker-compose.yml` file. The `-d` tells it to run them in daemon mode, in the background.
+
+Last you'll need to figure out the ip address of your Docker host. If you're running Linux, it's just localhost, or 127.0.0.1. If you're using Docker Machine on Mac or Windows, you'll need to run:
 
 ```
 $ docker-machine ip default
 ```
-It'll return an IP address. If you only have one Docker Machine running, most likely, that's 192.168.99.100. We'll call that YOUR_IP_ADDRESS. Navigate to YOUR_IP_ADDRESS:5000 in your browser, and you'll see the voting app, something like this:
+
+It'll return an IP address. If you only have one Docker Machine running, most likely, that's 192.168.99.100. We'll call that `<YOUR_IP_ADDRESS>`. Navigate to `http://<YOUR_IP_ADDRESS>:5000` in your browser, and you'll see the voting app, something like this:
 
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/vote.png" title="vote">
 
-Click on one to vote. You can check the results at YOUR_IP_ADDRESS:5001.
+Click on one to vote. You can check the results at `http://<YOUR_IP_ADDRESS:5001>`.
 
 <a id="buildandtag"></a>
 #### 3.2.4 Build and tag images
 
-You are all set then. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
+You are all set now. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
 
-In order to build the images, make sure to replace your *Docker Hub username* and *Docker image name* in the following commands:
+In order to build the images, make sure to replace `<YOUR_DOCKER_ID>` with your *Docker Hub username* in the following commands:
 
 ```
-$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_voting-app .
+$ docker build --no-cache -t <YOUR_DOCKER_ID>/votingapp_voting-app .
 ...
-$ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_result-app .
+$ docker build --no-cache -t <YOUR_DOCKER_ID>/votingapp_result-app .
 ...
 ```
 
@@ -765,16 +767,16 @@ $ docker build --no-cache -t YOUR_DOCKER_ID/votingapp_result-app .
 Push the images to Docker hub. Remember, you must have run `docker login` before you can push.
 
 ```
-$ docker push YOUR_DOCKER_ID/votingapp_voting-app
+$ docker push <YOUR_DOCKER_ID>/votingapp_voting-app
 ...
-$ docker push YOUR_DOCKER_ID/votingapp_result-app
+$ docker push <YOUR_DOCKER_ID>/votingapp_result-app
 ...
 ```
 
 <a id="confirmtraining"></a>
 ### 3.3 Confirm your completion
 
-Once you're completed steps 3.1 through 3.2.6 you can submit your application. It's very easy to do so. Navigate to your results app in the browser.
+Once you're completed steps 3.1 through 3.2.6 you can submit your application. It's very easy to do so.
 
 Get the *ID* of the running container running from image *examplevotingapp_result-app*:
 
@@ -793,7 +795,7 @@ App running on port 80
 Connected to db
 ```
 
-Open a browser and access YOUR_IP_ADDRESS:5001/birthday.html.
+Open a browser and access <YOUR_IP_ADDRESS>:5001/birthday.html.
 
 The page displayed will look like the one below:
 
@@ -801,7 +803,7 @@ The page displayed will look like the one below:
 
 Press the button.
 
-As soon as you did, return to your docker container where you are watching the log files and the output should look like:
+As soon as you do, return to your commandline where you are watching the log files and the output should look like:
 
 ```
 Thu, 10 Mar 2016 21:48:15 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:77:9
@@ -810,11 +812,11 @@ App running on port 80
 Connected to db
 YOUR_SUBMISSION_ID
 ```
-In order to check the status of your submission, copy your submission ID above and go to [dockerize.it](http://dockerize.it/). Paste the submission ID in the submission box above the map. It will take a few minutes for the submission status to go from "pending' to "accepted" and for your pin to appear on the map!
+Copy the submission ID above and go to [dockerize.it](http://dockerize.it/). Paste the submission ID in the submission box above the map. It will take a few minutes for the submission status to go from "pending' to "accepted" and for your pin to appear on the map!
 
 <a id="wrap-up"></a>
 ## 4.0 Wrap Up
-And that's a wrap! You are now ready to take the container world by storm! If you followed along till the very end then you should definitely be proud of yourself. You learned how to setup docker, run your own containers, use Docker Machine to create a Docker host and use Docker Compose to create a multi-container application.
+And that's a wrap! You are now ready to take the container world by storm! If you followed along till the very end then you should definitely be proud of yourself. You learned how to install docker, run your own containers, use Docker Machine to create a Docker host and use Docker Compose to create a multi-container application.
 
 Invite your friends to complete this [Docker Birthday Training] (https://github.com/docker/docker-birthday-3/)
 
