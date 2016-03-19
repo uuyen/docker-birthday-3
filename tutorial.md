@@ -382,7 +382,7 @@ In order to install Python modules required for our app we need to add to **requ
 Flask==0.10.1
 ```
 
-Create `directory` templates and create a **index.html** file in that directory, to have the same content as below:
+Create a directory called `templates` and create a **index.html** file in that directory, to have the same content as below:
 
 ```
 <html>
