@@ -118,7 +118,7 @@ drwxr-xr-x    5 root     root          4096 Mar  2 16:20 lib
 ......
 ......
 ```
-What happened? Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker run alpine`, you provided a command (`ls -l`), so Docker started the command specified and you saw the listing. 
+What happened? Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker run alpine`, you provided a command (`ls -l`), so Docker started the command specified and you saw the listing.
 
 Let's try something more exciting.
 
@@ -141,7 +141,7 @@ $ docker run alpine /bin/sh
 
 Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker run -it alpine /bin/sh`.
 
-You are now inside the container shell and you can try out a few commands like `ls -l`, `uptime` and others. Exit out of the container by giving the `exit` command. 
+You are now inside the container shell and you can try out a few commands like `ls -l`, `uptime` and others. Exit out of the container by giving the `exit` command.
 
 
 Ok, now it's time to see the `docker ps` command. The `docker ps` command shows you all containers that are currently running.
@@ -776,7 +776,7 @@ $ docker push <YOUR_DOCKER_ID>/votingapp_result-app
 <a id="confirmtraining"></a>
 ### 3.3 Confirm your completion
 
-Once you're completed steps 3.1 through 3.2.6 you can submit your application. It's very easy to do so.
+Once you're completed steps 3.1 through 3.2.5 you can submit your application. It's very easy to do so.
 
 Get the *ID* of the running container running from image *examplevotingapp_result-app*:
 
