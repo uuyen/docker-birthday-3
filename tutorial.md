@@ -551,7 +551,7 @@ Removing intermediate container 78e324d26576
 Successfully built 2f7357a0805d
 ```
 
-If you don't have the `alpine:latest` image, the client will first pull the image and then create your image. Therefore, your output on running the command will look different from mine. If everything went well, your image should be ready! Run `docker images` and see if your image (`<YOUR_USERNAME>\myfirstapp`) shows.
+If you don't have the `alpine:latest` image, the client will first pull the image and then create your image. Therefore, your output on running the command will look different from mine. If everything went well, your image should be ready! Run `docker images` and see if your image (`<YOUR_USERNAME>/myfirstapp`) shows.
 
 The last step in this section is to run the image and see if it actually works.
 
