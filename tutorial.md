@@ -774,7 +774,7 @@ $ docker push YOUR_DOCKER_ID/votingapp_result-app
 <a id="confirmtraining"></a>
 ### 3.3 Confirm your completion
 
-Once you're completed steps 3.1 through 3.2.6 you can submit your application. It's very easy to do so. Navigate to your results app in the browser.
+Once you're completed steps 3.1 through 3.2.5 you can submit your application. It's very easy to do so. Navigate to your results app in the browser.
 
 Get the *ID* of the running container running from image *examplevotingapp_result-app*:
 
