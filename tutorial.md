@@ -820,11 +820,10 @@ And that's a wrap! You are now ready to take the container world by storm! If yo
 
 Invite your friends to complete this [Docker Birthday Training] (https://github.com/docker/docker-birthday-3/)
 
-<a id="next-steps"></a>
-### 4.1 Next Steps
-
 <a href="#table-of-contents" class="top" id="preface">Top</a>
 <a id="references"></a>
 ## References
 - [What is docker](https://www.docker.com/what-docker)
 - [Docker Compose](https://docs.docker.com/compose)
+- [Prakhar Srivastav's Blog](http://prakhar.me) 
+
