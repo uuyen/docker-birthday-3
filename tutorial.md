@@ -747,6 +747,12 @@ It'll return an IP address. If you only have one Docker Machine running, most li
 
 Click on one to vote. You can check the results at `http://<YOUR_IP_ADDRESS:5001>`.
 
+**NOTE**: If you are running this tutorial in a cloud environment like AWS, Azure, Digital Ocean, or GCE you will not have direct access to localhost or 127.0.0.1 via a browser.  A work around for this is to leverage ssh port forwarding.  Below is an example for Mac OS.  Similarly this can be done for Windows and Putty users.
+
+```
+$ ssh -L 5000:localhost:5000 <ssh-user>@<CLOUD_INSTANCE_IP_ADDRESS>
+```
+
 <a id="buildandtag"></a>
 #### 3.2.4 Build and tag images
 
