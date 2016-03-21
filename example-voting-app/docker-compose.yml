@@ -10,6 +10,7 @@ services:
     links:
       - redis
     networks:
+      - front-tier
       - back-tier
 
   result-app:
@@ -21,6 +22,7 @@ services:
     links:
       - db
     networks:
+      - front-tier
       - back-tier
 
   worker:
@@ -48,4 +50,5 @@ volumes:
   db-data:
 
 networks:
+  front-tier:
   back-tier:
