@@ -28,9 +28,9 @@ This document contains a series of several sections, each of which explains a pa
 <a href="#top" class="top" id="table-of-contents">Top</a>
 ## Table of Contents
 
--	[Preface](#preface)
-    -	[Prerequisites](#prerequisites)
-    -	[Setting up your computer](#setup)
+- [Preface](#preface)
+    - [Prerequisites](#prerequisites)
+    - [Setting up your computer](#setup)
 -   [1.0 Playing with Alpine](#alpine)
     -   [1.1 Docker Run](#dockerrun)
     -   [1.2 Terminology](#terminology)
@@ -39,14 +39,14 @@ This document contains a series of several sections, each of which explains a pa
     -   [2.2 Docker Images](#docker-images)
     -   [2.3 Our First Image](#our-image)
     -   [2.4 Dockerfile](#dockerfiles)
--	 [3.0 Birthday training](#dockercompetition)
-	- [3.1 Pull voting-app images](#pullimage)
+-  [3.0 Birthday training](#dockercompetition)
+  - [3.1 Pull voting-app images](#pullimage)
   - [3.2 Customize the App](#customize)
                 - [3.2.1 Modify app.py](#modifyapp)
-		- [3.2.2 Modify config.json](#modifyconfig)
-		- [3.2.3 Building and running the app](#buildvotingapp)
-		- [3.2.4 Build and tag images](#buildandtag)
-		- [3.2.5 Push images to Docker Hub](#pushimages)
+    - [3.2.2 Modify config.json](#modifyconfig)
+    - [3.2.3 Building and running the app](#buildvotingapp)
+    - [3.2.4 Build and tag images](#buildandtag)
+    - [3.2.5 Push images to Docker Hub](#pushimages)
   - [3.3 Enter competition](#confirmtraining)
   - [3.4 Check your submission status](#checkstatus)
 -  [4.0 Wrap Up](#wrap-up)
@@ -637,7 +637,7 @@ This is what the file looks now like:
   "twitter":"@docker",
   "location":"San Francisco, CA, USA",
   "repo":["example/examplevotingapp_voting-app",\
-  			"example/examplevotingapp_result-app"],
+        "example/examplevotingapp_result-app"],
   "vote":"Cats"
 }
 ```
@@ -647,10 +647,10 @@ Replace it with your data:
 ```
 {
   "name":"John Doe",
-  "twitter":"@YOUR_DOCKER_ID",
+  "twitter":"@YOUR_TWITTER_HANDLER",
   "location":"San Francisco, CA, USA",
   "repo":["YOUR_DOCKER_ID/votingapp_voting-app", \
-  			"YOUR_DOCKER_ID/votingapp_result-app"],
+        "YOUR_DOCKER_ID/votingapp_result-app"],
   "vote":"Python"
 }
 ```
