@@ -299,7 +299,7 @@ $ docker pull ubuntu:12.04
 
 **NOTE**: Do not execute the above command. It is only for your reference.
 
-If you do not specify the version number of the image, then as mentioned the Docker client with default to a version named `latest`.
+If you do not specify the version number of the image, then as mentioned the Docker client will default to a version named `latest`.
 
 So for example, the `docker pull` command given below will pull an image named `ubuntu:latest`:
 
