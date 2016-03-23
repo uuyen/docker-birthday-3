@@ -636,9 +636,8 @@ This is what the file looks now like:
   "name":"Gordon",
   "twitter":"@docker",
   "location":"San Francisco, CA, USA",
-  "repo":["example/examplevotingapp_voting-app",\
-        "example/examplevotingapp_result-app"],
-  "vote":"Cats"
+  "repo":["example/examplevotingapp_voting-app","example/examplevotingapp_result-app"],
+  "vote":"Cat"
 }
 ```
 
@@ -649,8 +648,7 @@ Replace it with your data:
   "name":"John Doe",
   "twitter":"@YOUR_TWITTER_HANDLER",
   "location":"San Francisco, CA, USA",
-  "repo":["YOUR_DOCKER_ID/votingapp_voting-app", \
-        "YOUR_DOCKER_ID/votingapp_result-app"],
+  "repo":["YOUR_DOCKER_ID/votingapp_voting-app","YOUR_DOCKER_ID/votingapp_result-app"],
   "vote":"Python"
 }
 ```
