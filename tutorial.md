@@ -203,7 +203,7 @@ The image that you are going to use is a single-page website that was already cr
 $ docker run seqvence/static-site
 ```
 Since the image doesn't exist on your Docker host, the Docker daemon will first fetch the image from the registry and then run the image.
-Okay, now that the server is running, how do see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
+Okay, now that the server is running, do you see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
 
 In this case, the client didn't tell the Docker Engine to publish any of the ports so you need to re-run the `docker run` command. We'll take the oportunity to publish ports and pass your name to the container to customize the message displayed. While we are at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
 
