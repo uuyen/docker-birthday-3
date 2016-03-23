@@ -203,13 +203,13 @@ The image that you are going to use is a single-page website that was already cr
 $ docker run seqvence/static-site
 ```
 Since the image doesn't exist on your Docker host, the Docker daemon will first fetch the image from the registry and then run the image.
-Okay, now that the server is running, how do see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
+Okay, now that the server is running, do you see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
 
 In this case, the client didn't tell the Docker Engine to publish any of the ports so you need to re-run the `docker run` command. We'll take the oportunity to publish ports and pass your name to the container to customize the message displayed. While we are at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
 
 Before we look at the **detached** mode, we should first find out a way to stop the container that you have just launched.
 
-First up, launch another terminal (command window) and execute the following command:
+First up, launch another terminal (command window) and execute the following command. If you're using docker-machine you need to run `eval $(docker-machine env <YOUR_DOCKER_MACHINE_NAME>)` in each new terminal otherwise you'll get the error "Cannot connect to the Docker daemon. Is the docker daemon running on this host?".
 ```
 $ docker ps
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
@@ -241,7 +241,7 @@ $ docker port static-site
 80/tcp -> 0.0.0.0:32773
 ```
 
-If you're on Linux, you can open [http://localhost:32773](http://localhost:32773) in your browser. If you're on Windows or a Mac, you need to find the IP of the hostname.
+If you're on Linux, you can open [http://localhost:32773](http://localhost:32773) (replace 32773 with your port for 80/tcp) in your browser. If you're on Windows or a Mac, you need to find the IP of the hostname.
 
 ```
 $ docker-machine ip default
