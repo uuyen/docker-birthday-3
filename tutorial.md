@@ -589,6 +589,8 @@ $ docker login
 
 And follow the login directions. Now you can push images to Docker Hub.
 
+> Note: If you encounter an error response from daemon while attempting to login, you may need to restart your machine by running `docker-machine restart <YOUR_DOCKER_MACHINE_NAME>`.
+
 
 <a id="pullimage"></a>
 ### 3.1 Get the voting-app
