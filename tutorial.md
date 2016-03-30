@@ -825,7 +825,7 @@ Now that you have finished the tutorial, you should continue hacking on the app!
 We’re running a challenge for the best hack to improve this app - the best hack wins a very special Docker swag package and complimentary pass to [DockerCon 2016](http://2016.dockercon.com/)! The two runner-ups will receive an awesome Docker hoodie and all of these hacks will be featured in a blog post on [blog.docker.com](https://blog.docker.com/).
 
 
-*All submissions are due by Tuesday, April 15th at 9am PST.*
+*All submissions are due by Monday, April 18th at 9am PST.*
 
 
 We encourage you to build a cool hack based on what you learned. Our advice is to be creative, make sure it’s useful and most importantly, have fun!
