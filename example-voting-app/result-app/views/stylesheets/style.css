@@ -61,11 +61,11 @@ body{
   background:#fff;
   box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;
   vertical-align:middle;
-  font-size:40px;
+  font-size:20px;
   font-weight: 600;
-  width: 450px;
   height: 200px;
 }
+
 #choice a{
   text-decoration:none;
 }
@@ -75,12 +75,12 @@ body{
 }
 
 #choice .choice{
-  width: 49%;
   position: relative;
   top: 50%;
+  width: 49%;
   transform: translateY(-50%);
   text-align: left;
-  padding-left: 50px;
+  padding: 30px;
 }
 
 #choice .choice .label{
@@ -108,4 +108,13 @@ body{
   margin-bottom:-4px;
   width:50%;
   height:100%;
+}
+.choice > div {
+  text-align:center
+}
+
+@media screen and (min-width: 480px) {
+    #choice {
+        font-size:40px;
+    }
 }
