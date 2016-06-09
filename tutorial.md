@@ -1,4 +1,4 @@
-<h2 style="background-color:red":red">This Tutorial is out of date, please check out the [most up to date tutorial](https://github.com/docker/labs/tree/master/beginner) in our [github labs repository](https://github.com/docker/labs/)</h2>
+<h2 style="background-color:red":red">This Tutorial is out of date, please check out the <a href="https://github.com/docker/labs/tree/master/beginner">most up to date tutorial</a> in our <a href="https://github.com/docker/labs/">github labs repository</a> </h2>
 <br/>
 <br/>
 <br/>
