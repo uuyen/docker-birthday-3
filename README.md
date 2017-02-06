@@ -7,7 +7,7 @@
 ---
 **NOTE**
 
-Any code in this repo is out of date. Please head over to the [Docker Labs Repo](https://github.docker/labs) for up-to-date info. This repo is preserved only so old links still work.
+Any code in this repo is out of date. Please head over to the [Docker Labs Repo](https://github.com/docker/labs) for up-to-date info. This repo is preserved only so old links still work.
 
 ---
 - [Introduction to Docker and Docker Birthday #3 Slides](https://docs.google.com/a/docker.com/presentation/d/1MKQ8KTxeuSYPHp7LjuOy9k8FgzAApH9i-6A1micJa1A/edit?usp=drive_web)
