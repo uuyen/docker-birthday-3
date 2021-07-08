@@ -26,7 +26,7 @@ Based on the feedback we’ve received from Docker meetup organizers, we learned
 - [General Assembly](https://generalassemb.ly/)
 - [Microsoft](https://www.microsoft.com/en-us/)
 - [Joyent & the NodeJS community](https://www.joyent.com/developers/node)
-- [GoBridge] (http://golangbridge.org/)
+- [GoBridge] (http://golangbridge.org/) 
 - [Women Who Go] (http://www.womenwhogo.org/)
 - [Ruby Central] (http://rubycentral.org/)
 - [Women Who Code] (https://www.womenwhocode.com/)
